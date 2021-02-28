@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #0aac61;
+      }
+
+      .cls-2, .cls-4 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        font-size: 161px;
+        font-family: HYChaoJiZhanJiaW, HYChaoJiZhanJia;
+        letter-spacing: 0.1em;
+      }
+
+      .cls-3 {
+        fill: #f7a442;
+      }
+    </style>
+  </defs>
+  <g id="组_339" data-name="组 339" transform="translate(123.844 3122.844)">
+    <g id="组_311" data-name="组 311" transform="translate(-123.844 -3122.844)">
+      <g id="组_328" data-name="组 328" transform="translate(0 0)">
+        <rect id="矩形_110" data-name="矩形 110" class="cls-1" width="1024" height="1024"/>
+        <text id="悦读乐跑" class="cls-2" transform="translate(166.749 932.565)"><tspan x="0" y="0">悦读乐跑</tspan></text>
+        <g id="组_326" data-name="组 326" transform="translate(192.585 170.349)">
+          <path id="路径_327" data-name="路径 327" class="cls-3" d="M506.681,469.816s18.581-91.617,125.942-10.838c0,0,59.356-8.6,71.4-52.3s15.055-78.282,15.055-78.282H941.54l-1.548,11.1s-71.229-10.838-139.1,43.357S769.6,447.178,667.72,479.625C567.243,511.625,506.681,469.816,506.681,469.816Z" transform="translate(-436.828 -44.208)"/>
+          <path id="路径_328" data-name="路径 328" class="cls-4" d="M651.115,187.818S615.328,360.9,765.7,426.97C765.7,426.97,800.11,273.5,651.115,187.818Z" transform="translate(-293.076 -187.818)"/>
+          <path id="路径_329" data-name="路径 329" class="cls-4" d="M1065.8,465.6,913.453,387.012s-20.737,51.064-73.041,36.611S790.517,361,790.517,361,794.3,264.305,675.93,233.336s-172.739,81.208-172.739,81.208,15.829,105.984,88.091,158.287S761.1,562.125,811.164,647.807H989.752s9.8-71.229-73.3-48-70.708,37.681-103.741,12.9-81.036-76.047-85.853-142.286c0,0,23.4,33.379,65.723-1.2s118.716-35.873,139.1-27.874c0,0-53.68,62.2,24.518,94.972S1067.262,477.477,1065.8,465.6Z" transform="translate(-440.393 -146.84)"/>
+          <circle id="椭圆_22" data-name="椭圆 22" class="cls-4" cx="28.475" cy="28.475" r="28.475" transform="translate(0 136.219)"/>
+          <circle id="椭圆_23" data-name="椭圆 23" class="cls-4" cx="8" cy="8" r="8" transform="translate(624.163 310.937)"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

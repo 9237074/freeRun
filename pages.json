@@ -1,0 +1,172 @@
+{
+	"pages": [
+		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/loading/loading",
+			"style": {
+
+			}
+		}, {
+			"path": "pages/denglu/denglu",
+			"style": {
+				"navigationBarTitleText": "Yango.fun",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"backgroundColor": "#FFFFFF"
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
+			"path": "pages/read/read",
+			"style": {
+				"navigationBarTitleText": "读书任务列表"
+			}
+		},
+		{
+			"path": "pages/run/run",
+			"style": {
+				"navigationBarTitleText": "跑步中心"
+			}
+		},
+		{
+			"path": "pages/msg/msg",
+			"style": {
+				"navigationBarTitleText": "消息"
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
+			"path": "pages/running/running",
+			"style": {
+				"navigationBarTitleText": "跑步中心"
+			}
+		},
+		{
+			"path": "pages/sgin/sgin",
+			"style": {}
+		},
+		{
+			"path": "pages/runed/runed",
+			"style": {
+				"navigationBarTitleText": "恭喜你跑完啦～"
+			}
+		},
+		{
+			"path": "pages/runRecord/runRecord",
+			"style": {
+				"navigationBarTitleText": "跑步记录",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/readRecord/readRecord",
+			"style": {
+				"navigationBarTitleText": "读书记录",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/qr2/qr2",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/rank/rank",
+			"style": {
+				"navigationBarTitleText": "排行榜"
+			}
+		},
+		{
+			"path": "pages/runRule/runRule",
+			"style": {}
+		},
+		{
+			"path": "pages/forgetPassword/forgetPassword",
+			"style": {}
+		},
+		{
+			"path": "pages/runQuestion/runQuestion",
+			"style": {}
+		},
+		{
+			"path": "pages/runningBeat/running",
+			"style": {}
+		}, {
+			"path": "pages/update/update",
+			"style": {}
+		}
+	    ,{
+            "path" : "pages/debug/debug",
+            "style" : {}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarBackgroundColor": "#0081ff",
+		"navigationBarTitleText": "Yangofun",
+		"navigationStyle": "custom",
+		"navigationBarTextStyle": "white",
+		"pageOrientation": "portrait"
+	},
+	"tabBar": {
+		// "midButton":{
+		// 	"pagePath":"pages/run/run",
+		// 	"iconPath":"static/run.png",
+		// 	"selectedIconPath":"static/run1.png",
+		// 	"text":"晨跑"
+		// },
+		"selectedColor": "#0AAC61",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/index.png",
+				"selectedIconPath": "static/index1.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/read/read",
+				"iconPath": "static/read.png",
+				"selectedIconPath": "static/read1.png",
+				"text": "读书"
+			},
+			{
+				"pagePath": "pages/run/run",
+				"iconPath": "static/run.png",
+				"selectedIconPath": "static/run1.png",
+				"text": "跑步"
+			},
+			{
+				"pagePath": "pages/rank/rank",
+				"iconPath": "static/msg.png",
+				"selectedIconPath": "static/rank1.png",
+				"text": "排行榜"
+			},
+			{
+				"pagePath": "pages/login/login",
+				"iconPath": "static/login1.png",
+				"selectedIconPath": "static/login2.png",
+				"text": "我的"
+			}
+		]
+	},
+	"condition": {
+		//模式配置，仅开发期间生效
+		"current": 1, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "test", //模式名称
+			"path": "pages/loading/loading", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		},{
+			"name":"run",
+			"path":"pages/running/running"
+		}]
+	}
+}

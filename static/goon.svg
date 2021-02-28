@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="108" height="108" viewBox="0 0 108 108">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #7cb586;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        font-size: 12px;
+        font-family: PingFang SC Medium, PingFang SC;
+      }
+
+      .cls-4 {
+        filter: url(#椭圆_4);
+      }
+    </style>
+    <filter id="椭圆_4" x="0" y="0" width="108" height="108" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="组_258" data-name="组 258" transform="translate(-56 -501)">
+    <g class="cls-4" transform="matrix(1, 0, 0, 1, 56, 501)">
+      <circle id="椭圆_4-2" data-name="椭圆 4" class="cls-1" cx="45" cy="45" r="45" transform="translate(9 6)"/>
+    </g>
+    <text id="继续" class="cls-2" transform="translate(98 576)"><tspan x="0" y="0">继续</tspan></text>
+    <path id="路径_264" data-name="路径 264" class="cls-3" d="M45.529,133.916,32.109,123.809a.725.725,0,0,0-.853-.031,1.042,1.042,0,0,0-.434.875v20.214a1.043,1.043,0,0,0,.435.874.726.726,0,0,0,.852-.029l13.422-10.1a1.111,1.111,0,0,0,0-1.691Zm-21.5-10.492a2.3,2.3,0,0,0-2.112,2.448v17.769a2.3,2.3,0,0,0,2.112,2.449,2.3,2.3,0,0,0,2.112-2.449V125.872A2.3,2.3,0,0,0,24.032,123.424Z" transform="translate(79.08 407.576)"/>
+  </g>
+</svg>
