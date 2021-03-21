@@ -1,9 +1,9 @@
 {
     "name" : "freeRun",
-    "appid" : "__UNI__41DADB1",
+    "appid" : "__UNI__9519670",
     "description" : "轻松跑步",
-    "versionName" : "1.0.9",
-    "versionCode" : 10,
+    "versionName" : "0.0.1",
+    "versionCode" : 1,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -135,10 +135,28 @@
                         "spotlight@3x" : "unpackage/res/icons/120x120.png"
                     }
                 }
+            },
+            "splashscreen" : {
+                "androidStyle" : "common"
             }
         },
         "nvueLaunchMode" : "",
-        "nativePlugins" : {}
+        "nativePlugins" : {
+            "FUN-AmapLocation" : {
+                "__plugin_info__" : {
+                    "name" : "持续定位、后台定位 - [试用版，仅用于自定义调试基座]",
+                    "description" : "持续定位、后台定位、高德定位, 后台保活，购买前先测试是否符合需求",
+                    "platforms" : "Android",
+                    "url" : "https://ext.dcloud.net.cn/plugin?id=2018",
+                    "android_package_name" : "",
+                    "ios_bundle_id" : "",
+                    "isCloud" : true,
+                    "bought" : 0,
+                    "pid" : "2018",
+                    "parameters" : {}
+                }
+            }
+        }
     },
     /* 快应用特有相关 */
     "quickapp" : {},

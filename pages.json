@@ -2,6 +2,10 @@
 	"pages": [
 		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+		    "path" : "pages/debug/debug",
+		    "style" : {}
+		},
+		{
 			"path": "pages/loading/loading",
 			"style": {
 
@@ -105,10 +109,7 @@
 			"path": "pages/update/update",
 			"style": {}
 		}
-	    ,{
-            "path" : "pages/debug/debug",
-            "style" : {}
-        }
+	    
     ],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#0081ff",
@@ -118,12 +119,6 @@
 		"pageOrientation": "portrait"
 	},
 	"tabBar": {
-		// "midButton":{
-		// 	"pagePath":"pages/run/run",
-		// 	"iconPath":"static/run.png",
-		// 	"selectedIconPath":"static/run1.png",
-		// 	"text":"晨跑"
-		// },
 		"selectedColor": "#0AAC61",
 		"list": [{
 				"pagePath": "pages/index/index",
@@ -159,10 +154,10 @@
 	},
 	"condition": {
 		//模式配置，仅开发期间生效
-		"current": 1, //当前激活的模式(list 的索引项)
+		"current": 0, //当前激活的模式(list 的索引项)
 		"list": [{
-			"name": "test", //模式名称
-			"path": "pages/loading/loading", //启动页面，必选
+			"name": "debug", //模式名称
+			"path": "pages/debug/debug", //启动页面，必选
 			"query": "" //启动参数，在页面的onLoad函数里面得到
 		},{
 			"name":"run",

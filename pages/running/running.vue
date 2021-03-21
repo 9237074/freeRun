@@ -56,9 +56,7 @@
 <script>
 	import GpsTool from '../../util/gpsTools.js'
 	const crypto = require('crypto');
-	const appkey = require("appkey.js");
-	const music = require('../../static/aduio/01.mp3')
-	const gpsFilter = require('gps-filter')
+	// const music = require('../../static/aduio/01.mp3')
 	export default {
 		data() {
 			return {
@@ -156,19 +154,19 @@
 			},
 			getLocation: function() {
 				// 开启 时间 定时器
-				this.timeSetInterval = setInterval(() => {
-					// this.time = new Date().getTime() / 1000 - this.startTime
-					if (this.globalData.platform !== 'ios') {
-						let bgm = uni.getBackgroundAudioManager()
-						bgm.src = music
-						bgm.play()
-					}
-					this.time++
-				}, 1000)
-				this.timeSetIntervalGps = setInterval(async()=>{
-					let gpsInfo = await this.getLocationSync()
-					this.handleLocation(gpsInfo)
-				},1000)
+				// this.timeSetInterval = setInterval(() => {
+				// 	// this.time = new Date().getTime() / 1000 - this.startTime
+				// 	if (this.globalData.platform !== 'ios') {
+				// 		let bgm = uni.getBackgroundAudioManager()
+				// 		bgm.src = music
+				// 		bgm.play()
+				// 	}
+				// 	this.time++
+				// }, 1000)
+				// this.timeSetIntervalGps = setInterval(async()=>{
+				// 	let gpsInfo = await this.getLocationSync()
+				// 	this.handleLocation(gpsInfo)
+				// },1000)
 			},
 			// 处理定位信息
 			handleLocation(e) {
@@ -188,7 +186,7 @@
 				}
 				// 判断当前gps跟上一个gps是否一样
 				if(this.tempGps.latitude === realGps.latitude && this.tempGps.longitude === realGps.longitude){
-					console.log('updateTime:', this.tempGps.timestamp, realGps.timestamp, realGps.timestamp - this.tempGps.timestamp)
+					// console.log('updateTime:', this.tempGps.timestamp, realGps.timestamp, realGps.timestamp - this.tempGps.timestamp)
 					this.tempGps.timestamp = realGps.timestamp
 					return
 				}
@@ -230,89 +228,7 @@
 			},
 			// 提交
 			over: function() {
-				console.log('提交表单')
-				//清除定时器
-				clearInterval(this.timeSetInterval);
-				clearInterval(this.timeSetIntervalGps)
-				let that = this
-				let status = true
-				// 判断用户打卡数量
-				if (!this.checkSign()) return
-				// 判断时间
-				if (!this.checkTime()) return
-				// 判断用户里程 需大于2000m
-				if (!this.checkDistance()) return
-				// 设备登陆检查
-				if (!this.checkToken()) return
-				let key = crypto.createHmac('sha256', appkey.appkey).update(
-					`${this.time}+${this.distance}+${this.speed}+${this.globalData.token}`).digest('hex');
-				// 提交跑步数据
-				uni.request({
-					url: this.globalData.server + '/runcheck',
-					method: 'POST',
-					data: {
-						token: this.globalData.token,
-						runTime: 0,
-						spendTime: this.time,
-						mileage: this.distance,
-						stepCount: 0,
-						speed: this.speed,
-						gps: this.gps,
-						detail: 0,
-						status: 0,
-						key: key
-					},
-					success(res) {
-						if (res.data.msg == "跑步完成") {
-							that.isMove = false
-							// that.globalData.todayRun = new Date
-							uni.showToast({
-								title: "跑步完成",
-								duration: 2000
-							})
-							that.globalData.runTime = parseInt(new Date().getTime() / 1000);
-							let a = JSON.stringify({
-								"gps": this.gps,
-								"spendTime": this.time,
-								"mileage": this.distance,
-								"spend": this.speed
-							})
-							uni.redirectTo({
-								url: '../runed/runed?data=' + a
-							})
-						} else {
-							console.log(res.data.msg)
-							uni.showToast({
-								title: res.data.msg,
-								duration: 2000
-							})
-						}
-					},
-					fail() {
-						uni.showModal({
-							title: '提示',
-							content: '上传失败',
-							confirmText: "重试",
-							cancelText: "返回首页",
-							success: (res) => {
-								if (res.confirm) {
-									this.over()
-								} else {
-									let a = JSON.stringify({
-										"gps": this.gps,
-										"spendTime": this.time,
-										"mileage": this.distance,
-										"spend": this.speed
-									})
-									uni.navigateBack({
-										delta: -1
-									})
-								}
-							}
-						})
-					}
-				})
-				this.polyline[0].points = []
+				
 			},
 			// 检查时间 大于600秒 小于7200秒
 			checkTime: function() {

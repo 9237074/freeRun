@@ -54,7 +54,6 @@
 
 <script>
 	const crypto = require('crypto');
-	const appkey = require("appkey.js")
 	const getDistance = require('../../util/getDistance.js')
 	export default {
 		data() {
@@ -282,126 +281,7 @@
 				that.active = 1;
 			},
 			over:function(){
-				//清除时间定时器
-				clearInterval(this.start);
-				// this.active = 1;
-				var that = this
-				//清除获取定位定时器
-				clearInterval(this.location1);
 				
-				//超级管理员
-				if(that.globalData.studentId == '172720158'){
-					that.pointCount1 = 1
-					that.pointCount2 = 1
-					this.km = Number(this.km)+2000
-					this.sec = Number(this.sec)+600
-				}else{
-					console.log('正常用户判断打卡点')
-				}
-				
-				// 判断打卡点
-				if(that.pointCount1 == 1 && that.pointCount2 == 1){
-					var key = crypto.createHmac('sha256', appkey.appkey).update(`${this.sec}+${this.km}+${this.speed}+${this.globalData.token}`).digest('hex')
-					console.log('data:',this.sec,this.km,this.speed,this.globalData.token)
-					console.log('判断前的km',this.km)
-					//判断距离
-					if(this.km >= 2000 && this.km <= 10000){
-						// 判断时间
-						if(this.sec >= 600 && this.sec <= 1800){
-							// 设备登陆检查
-							that.checkToken();
-							uni.request({
-								url:that.globalData.server+'/runcheck',
-								data:{
-									token:that.globalData.token,
-									runTime:0,
-									spendTime:this.sec,
-									mileage:this.km,
-									stepCount:0,
-									speed:this.speed,
-									gps:this.ll,
-									detail:0,
-									status:0,
-									key:key
-								},
-								success(res) {
-									if(res.data.msg == "跑步完成"){
-										// that.globalData.todayRun = new Date
-										uni.showToast({
-											title:"跑步完成",
-											duration:2000
-										})
-										// var Date = new Date();
-										that.globalData.runTime = parseInt(new Date().getTime()/1000);
-										
-									}else{
-										console.log(res.data)
-										uni.showToast({
-											title:'上传失败',
-											duration:2000
-										})
-									}
-								}
-							})
-							let a = JSON.stringify({"gps":this.ll,"spendTime":this.sec,"mileage":this.km,"spend":this.speed})
-							uni.redirectTo({
-								url:'../runed/runed?data='+a
-							}); 
-						}else{
-							uni.showModal({
-								title: '提示',
-								cancelText:'继续',
-								content: '时间过短，此次记录不会保存',
-								success: function (res) {
-									if (res.confirm) {
-										uni.switchTab({
-											url:'../run/run'
-										})
-										console.log('用户点击确定');
-									} else if (res.cancel) {
-										console.log('用户点击取消');
-										that.goon();
-									}
-								}
-							});
-						}
-					}else{
-						uni.showModal({
-							title: '提示',
-							cancelText:'继续',
-							content: '距离过短，此次记录不会保存',
-							success: function (res) {
-								if (res.confirm) {
-									uni.switchTab({
-										url:'../run/run'
-									})
-									console.log('用户点击确定');
-								} else if (res.cancel) {
-									console.log('用户点击取消');
-									that.goon();
-								}
-							}
-						});
-					}
-				}else{
-					uni.showModal({
-						title:'提示',
-						content:'打卡点未满足2个',
-						cancelText:'继续',
-						confirmText:'结束',
-						success(res) {
-							if (res.confirm) {
-								uni.switchTab({
-									url:'../run/run'
-								})
-								console.log('用户点击确定');
-							} else if (res.cancel) {
-								console.log('用户点击取消');
-								that.goon();
-							}
-						}
-					})
-				}
 			}
 		} 
 	}
