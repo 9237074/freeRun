@@ -1,9 +1,12 @@
 {
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
 	"pages": [
 		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-		    "path" : "pages/debug/debug",
-		    "style" : {}
+			"path": "pages/debug/debug",
+			"style": {}
 		},
 		{
 			"path": "pages/loading/loading",
@@ -109,8 +112,8 @@
 			"path": "pages/update/update",
 			"style": {}
 		}
-	    
-    ],
+
+	],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#0081ff",
 		"navigationBarTitleText": "Yangofun",
@@ -159,9 +162,9 @@
 			"name": "debug", //模式名称
 			"path": "pages/debug/debug", //启动页面，必选
 			"query": "" //启动参数，在页面的onLoad函数里面得到
-		},{
-			"name":"run",
-			"path":"pages/running/running"
+		}, {
+			"name": "run",
+			"path": "pages/running/running"
 		}]
 	}
 }

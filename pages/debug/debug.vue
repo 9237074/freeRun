@@ -4,17 +4,21 @@
 			<!-- <block slot="backText">返回</block> -->
 			<block slot='content'>debug</block>
 		</cu-custom>
+		<view class="">
+			版本号为：{{vuex_version}}
+		</view>
+		<button type="default" @click="modifyVuex">asd</button>
 		<view class="content" v-for="(item,index) in logStorage" :key="item.timestamp">
 			{{index+1}}
 			{{item.latitude}}
 			{{item.longitude}}
 			{{new Date(item.time).toGMTString()}}
 		</view>
+		<u-action-sheet :list="list" v-model="show"></u-action-sheet>
 	</view>
 </template>
 
 <script>
-	import login from '../../api/system/login.js'
 	export default {
 		data() {
 			return {
@@ -26,21 +30,33 @@
 					provider: 'system',
 					coordsType: 'wgs84',
 					geocode: false
-				}
+				},
+				list: [{
+					text: '点赞',
+					color: 'blue',
+					fontSize: 28
+				}, {
+					text: '分享'
+				}, {
+					text: '评论'
+				}],
+				show: false
 			}
 		},
 		onLoad() {
-			login().then(res => {
-				console.log(res)
-			}).catch(e => {
-				console.log("err:", e)
-			})
-			console.log("token:", this.$store.state.system.token)
-			// login().then(res => {
+			// this.$u.api.login().then(res => {
 			// 	console.log(res)
 			// })
+			
+			
 		},
 		methods: {
+			modifyVuex() {
+				this.$u.vuex('vuex_version', '1.0.1');
+				// 修改对象的形式，中间用"."分隔
+				// this.$u.vuex('vuex_user.name', '诗圣');
+				// console.log('this.$u:', this)
+			},
 			startGeolation() {
 				// #ifdef APP-PLUS
 				const platform = uni.getSystemInfoSync().platform
@@ -71,9 +87,9 @@
 						}
 					);
 				})
-				// #endif
-			}
+			// #endif
 		}
+	}
 	}
 </script>
 
