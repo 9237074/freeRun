@@ -4,10 +4,10 @@ Vue.use(Vuex)
 
 let lifeData = {};
 
-try{
+try {
 	// 尝试获取本地是否存在lifeData变量，第一次启动APP时是不存在的
 	lifeData = uni.getStorageSync('lifeData');
-}catch(e){
+} catch (e) {
 	console.log('获取本地缓存失败')
 }
 
@@ -15,9 +15,9 @@ try{
 let saveStateKeys = ['vuex_user', 'vuex_token'];
 
 // 保存变量到本地存储中
-const saveLifeData = function(key, value){
+const saveLifeData = function(key, value) {
 	// 判断变量名是否在需要存储的数组中
-	if(saveStateKeys.indexOf(key) != -1) {
+	if (saveStateKeys.indexOf(key) != -1) {
 		// 获取本地存储的lifeData对象，将变量添加到对象中
 		let tmp = uni.getStorageSync('lifeData');
 		// 第一次打开APP，不存在lifeData变量，故放一个{}空对象
@@ -32,10 +32,54 @@ const store = new Vuex.Store({
 	state: {
 		// 如果上面从本地获取的lifeData对象下有对应的属性，就赋值给state中对应的变量
 		// 加上vuex_前缀，是防止变量名冲突，也让人一目了然
-		vuex_user: lifeData.vuex_user ? lifeData.vuex_user : {name: '明月'},
+		vuex_user: lifeData.vuex_user ? lifeData.vuex_user : {
+			name: '明月'
+		},
 		vuex_token: lifeData.vuex_token ? lifeData.vuex_token : '',
 		// 如果vuex_version无需保存到本地永久存储，无需lifeData.vuex_version方式
 		vuex_version: '0.0.1',
+		tabbar: [{
+				iconPath: "home",
+				selectedIconPath: "home-fill",
+				pagePath: "/pages/index/index",
+				text: '首页',
+				count: 2,
+				isDot: true,
+				customIcon: false,
+			},
+			{
+				iconPath: "bookmark",
+				selectedIconPath: "bookmark-fill",
+				pagePath: "/pages/read/readHome/readHome",
+				text: '读书',
+				customIcon: false,
+			},
+			{
+				iconPath: "https://cdn.uviewui.com/uview/common/min_button.png",
+				selectedIconPath: "https://cdn.uviewui.com/uview/common/min_button_select.png",
+				pagePath: "/pages/run/runHome/runHome",
+				text: '跑步',
+				midButton: true,
+				customIcon: false,
+			},
+			{
+				iconPath: "play-right",
+				selectedIconPath: "play-right-fill",
+				pagePath: "/pages/user/rankHome/rankHome",
+				text: '直播',
+				customIcon: false,
+			},
+			{
+				iconPath: "account",
+				selectedIconPath: "account-fill",
+				pagePath: "/pages/user/me/me",
+				text: '我的',
+				count: 23,
+				isDot: false,
+				customIcon: false,
+			},
+		],
+		current: 0
 	},
 	mutations: {
 		$uStore(state, payload) {
@@ -43,9 +87,9 @@ const store = new Vuex.Store({
 			let nameArr = payload.name.split('.');
 			let saveKey = '';
 			let len = nameArr.length;
-			if(nameArr.length >= 2) {
+			if (nameArr.length >= 2) {
 				let obj = state[nameArr[0]];
-				for(let i = 1; i < len - 1; i ++) {
+				for (let i = 1; i < len - 1; i++) {
 					obj = obj[nameArr[i]];
 				}
 				obj[nameArr[len - 1]] = payload.value;

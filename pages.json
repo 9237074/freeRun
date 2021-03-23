@@ -5,118 +5,155 @@
 	"pages": [
 		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/debug/debug",
+			"path": "pages/system/debug/debug",
 			"style": {}
-		},
-		{
-			"path": "pages/loading/loading",
-			"style": {
-
-			}
 		}, {
-			"path": "pages/denglu/denglu",
+			"path": "pages/user/me/me",
 			"style": {
-				"navigationBarTitleText": "Yango.fun",
+				"navigationBarTitleText": "个人首页",
 				"navigationBarBackgroundColor": "#FFFFFF",
 				"backgroundColor": "#FFFFFF"
 			}
-		},
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "首页"
-			}
-		},
-		{
-			"path": "pages/read/read",
-			"style": {
-				"navigationBarTitleText": "读书任务列表"
-			}
-		},
-		{
-			"path": "pages/run/run",
-			"style": {
-				"navigationBarTitleText": "跑步中心"
-			}
-		},
-		{
-			"path": "pages/msg/msg",
-			"style": {
-				"navigationBarTitleText": "消息"
-			}
-		},
-		{
-			"path": "pages/login/login",
-			"style": {
-				"navigationBarTitleText": "个人中心"
-			}
-		},
-		{
-			"path": "pages/running/running",
-			"style": {
-				"navigationBarTitleText": "跑步中心"
-			}
-		},
-		{
-			"path": "pages/sgin/sgin",
-			"style": {}
-		},
-		{
-			"path": "pages/runed/runed",
-			"style": {
-				"navigationBarTitleText": "恭喜你跑完啦～"
-			}
-		},
-		{
-			"path": "pages/runRecord/runRecord",
-			"style": {
-				"navigationBarTitleText": "跑步记录",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/readRecord/readRecord",
-			"style": {
-				"navigationBarTitleText": "读书记录",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/qr2/qr2",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/rank/rank",
-			"style": {
-				"navigationBarTitleText": "排行榜"
-			}
-		},
-		{
-			"path": "pages/runRule/runRule",
-			"style": {}
-		},
-		{
-			"path": "pages/forgetPassword/forgetPassword",
-			"style": {}
-		},
-		{
-			"path": "pages/runQuestion/runQuestion",
-			"style": {}
-		},
-		{
-			"path": "pages/runningBeat/running",
-			"style": {}
 		}, {
-			"path": "pages/update/update",
-			"style": {}
+			"path": "pages/system/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"backgroundColor": "#FFFFFF"
+			}
+		}, {
+			"path": "pages/read/readHome/readHome",
+			"style": {
+				"navigationBarTitleText": "晨读首页",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"backgroundColor": "#FFFFFF"
+			}
+		}, {
+			"path": "pages/run/runHome/runHome",
+			"style": {
+				"navigationBarTitleText": "跑步首页",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"backgroundColor": "#FFFFFF"
+			}
+		}, {
+			"path": "pages/user/rankHome/rankHome",
+			"style": {
+				"navigationBarTitleText": "排行榜首页",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"backgroundColor": "#FFFFFF"
+			}
 		}
+		// {
+		// 	"path": "pages/loading/loading",
+		// 	"style": {
+
+		// 	}
+		// }, {
+		// 	"path": "pages/denglu/denglu",
+		// 	"style": {
+		// 		"navigationBarTitleText": "Yango.fun",
+		// 		"navigationBarBackgroundColor": "#FFFFFF",
+		// 		"backgroundColor": "#FFFFFF"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/index/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "首页"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/read/read",
+		// 	"style": {
+		// 		"navigationBarTitleText": "读书任务列表"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/run/run",
+		// 	"style": {
+		// 		"navigationBarTitleText": "跑步中心"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/msg/msg",
+		// 	"style": {
+		// 		"navigationBarTitleText": "消息"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/me/me",
+		// 	"style": {
+		// 		"navigationBarTitleText": "个人中心"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/running/running",
+		// 	"style": {
+		// 		"navigationBarTitleText": "跑步中心"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/sign/sign",
+		// 	"style": {
+		// 		// "bounce": "none"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/runed/runed",
+		// 	"style": {
+		// 		"navigationBarTitleText": "恭喜你跑完啦～"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/runRecord/runRecord",
+		// 	"style": {
+		// 		"navigationBarTitleText": "跑步记录",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/readRecord/readRecord",
+		// 	"style": {
+		// 		"navigationBarTitleText": "读书记录",
+		// 		"enablePullDownRefresh": true
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/qr2/qr2",
+		// 	"style": {
+		// 		"navigationBarTitleText": ""
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/rank/rank",
+		// 	"style": {
+		// 		"navigationBarTitleText": "排行榜"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/runRule/runRule",
+		// 	"style": {}
+		// },
+		// {
+		// 	"path": "pages/forgetPassword/forgetPassword",
+		// 	"style": {}
+		// },
+		// {
+		// 	"path": "pages/runQuestion/runQuestion",
+		// 	"style": {}
+		// },
+		// {
+		// 	"path": "pages/runningBeat/running",
+		// 	"style": {}
+		// }, {
+		// 	"path": "pages/update/update",
+		// 	"style": {}
+		// }
 
 	],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#0081ff",
-		"navigationBarTitleText": "Yangofun",
+		"navigationBarTitleText": "FreeRun",
 		"navigationStyle": "custom",
 		"navigationBarTextStyle": "white",
 		"pageOrientation": "portrait"
@@ -124,34 +161,19 @@
 	"tabBar": {
 		"selectedColor": "#0AAC61",
 		"list": [{
-				"pagePath": "pages/index/index",
-				"iconPath": "static/index.png",
-				"selectedIconPath": "static/index1.png",
-				"text": "首页"
+				"pagePath": "pages/read/readHome/readHome"
 			},
 			{
-				"pagePath": "pages/read/read",
-				"iconPath": "static/read.png",
-				"selectedIconPath": "static/read1.png",
-				"text": "读书"
+				"pagePath": "pages/index/index"
 			},
 			{
-				"pagePath": "pages/run/run",
-				"iconPath": "static/run.png",
-				"selectedIconPath": "static/run1.png",
-				"text": "跑步"
+				"pagePath": "pages/run/runHome/runHome"
 			},
 			{
-				"pagePath": "pages/rank/rank",
-				"iconPath": "static/msg.png",
-				"selectedIconPath": "static/rank1.png",
-				"text": "排行榜"
+				"pagePath": "pages/user/rankHome/rankHome"
 			},
 			{
-				"pagePath": "pages/login/login",
-				"iconPath": "static/login1.png",
-				"selectedIconPath": "static/login2.png",
-				"text": "我的"
+				"pagePath": "pages/user/me/me"
 			}
 		]
 	},
@@ -159,12 +181,21 @@
 		//模式配置，仅开发期间生效
 		"current": 0, //当前激活的模式(list 的索引项)
 		"list": [{
-			"name": "debug", //模式名称
-			"path": "pages/debug/debug", //启动页面，必选
+			"name": "me", //模式名称
+			"path": "pages/user/me/me", //启动页面，必选
 			"query": "" //启动参数，在页面的onLoad函数里面得到
 		}, {
-			"name": "run",
-			"path": "pages/running/running"
+			"name": "tabbar",
+			"path": "pages/tabbar/tabbar"
+		}, {
+			"name": "sign",
+			"path": "pages/system/sign/sign"
+		}, {
+			"name": "login",
+			"path": "pages/system/login/login"
+		}, {
+			"name": "debug",
+			"path": "pages/system/debug/debug"
 		}]
 	}
 }
