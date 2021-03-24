@@ -9,6 +9,7 @@ let vuexStore = require("@/store/$u.mixin.js");
 Vue.mixin(vuexStore);
 Vue.use(uView);
 import store from '@/store'
+import config from '@/config'
 
 Vue.component('cu-custom', cuCustom)
 
@@ -16,7 +17,7 @@ Vue.config.productionTip = false
 
 //checkKey
 Vue.prototype.checkKey = function(data) {
-	return crypto.createHmac('sha256', appKey.appkey).update(data).digest('hex')
+	return crypto.createHmac('sha256', config.appkey).update(data).digest('hex')
 }
 
 App.mpType = 'app'

@@ -35,13 +35,15 @@ const store = new Vuex.Store({
 		vuex_user: lifeData.vuex_user ? lifeData.vuex_user : {
 			name: '明月'
 		},
+		// 用户信息
+		userInfo: lifeData.userInfo? lifeData.userInfo : {},
 		vuex_token: lifeData.vuex_token ? lifeData.vuex_token : '',
 		// 如果vuex_version无需保存到本地永久存储，无需lifeData.vuex_version方式
 		vuex_version: '0.0.1',
 		tabbar: [{
 				iconPath: "home",
 				selectedIconPath: "home-fill",
-				pagePath: "/pages/index/index",
+				pagePath: "/pages/system/index/index",
 				text: '首页',
 				count: 2,
 				isDot: true,
@@ -66,7 +68,7 @@ const store = new Vuex.Store({
 				iconPath: "play-right",
 				selectedIconPath: "play-right-fill",
 				pagePath: "/pages/user/rankHome/rankHome",
-				text: '直播',
+				text: '排行榜',
 				customIcon: false,
 			},
 			{

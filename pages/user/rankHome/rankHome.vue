@@ -1,8 +1,6 @@
 <template>
 	<view id="page">
-		<cu-custom bgColor="bg-gradual-theme" :isBack="false">
-			<block slot='content'>排行榜</block>
-		</cu-custom>
+		
 		<view style="background-color: #0AAC61;">
 			<view @click="onclick0" style="display: inline-block;width: 50%;text-align: center;">
 				<text :class="status0">跑步</text>

@@ -1,39 +1,35 @@
 <template>
-	<view class="page">
-		<!-- 头部log区 -->
-		<view class="circle" style="text-align: center;width: 100vw;">
-			<view class="title">
-				<view>
-					<!-- <image src="../../static/logo.png" style="width: 80px;height: 80px;"></image> -->
+	<view class="content">
+		<u-toast ref="uToast" />
+		<view class="container">
+			<view class="header">
+				欢迎加入FreeRun
+			</view>
+			<!-- 表单输入区 -->
+			<view class="from">
+				<u-form :model="form" ref="uForm" :error-type="errorType">
+					<u-form-item label="" prop="studentId" left-icon="account-fill" :left-icon-style="leftIconStyle">
+						<u-input v-model="form.studentId" type="number" required />
+					</u-form-item>
+					<u-form-item label="" prop="password" left-icon="lock-fill" :left-icon-style="leftIconStyle">
+						<u-input v-model="form.password" type="password" required />
+					</u-form-item>
+				</u-form>
+				<u-button shape="circle" :ripple="true" ripple-bg-color="#8765e1" @click="submit" size="medium"
+					:custom-style="customStyle" :hair-line="false">
+					登录
+				</u-button>
+			</view>
+
+			<!-- 注册 忘记密码 -->
+			<view class="footer">
+				<view @click="sign">
+					注册
 				</view>
-				<view>
-					<text>freeRun</text>
+				<view @click="forget">
+					忘记密码?
 				</view>
 			</view>
-		</view>
-
-		<!-- 表单输入区 -->
-		<view class="shuru">
-			<form @submit="formSubmit">
-				<view class="inp">
-					<input @input="user" type="text" style="margin-left: 40rpx;margin-top: 15rpx;font-size: 35rpx;color: #black;"
-					 placeholder='请输入学号' />
-				</view>
-				<view class="inp">
-					<input @input="password" type="text" style="margin-left: 40rpx;margin-top: 15rpx;font-size: 35rpx;color: #black;"
-					 password="true" placeholder="请输入密码" />
-				</view>
-				<view class="btn">
-					<button style="border-radius: 20px;width: 271px;height: 46px;background-color: #0AAC61;color:#FFFFFF;" formType="submit">登陆</button>
-				</view>
-			</form>
-		</view>
-
-		<!-- 注册 忘记密码 -->
-		<view class="sigin">
-			<text @click="sigin" style="color: #0AAC61;margin-right: 30upx;">注册</text>
-			<text>|</text>
-			<text @click="forget" style="margin-left: 30upx;color: #0AAC61;">忘记密码</text>
 		</view>
 	</view>
 </template>
@@ -44,91 +40,138 @@
 	export default {
 		data() {
 			return {
-				id: '',
-				pw: '',
-				time: 0
+				form: {
+					studentId: '',
+					password: ''
+				},
+				rules: {
+					studentId: [{
+						min: 5,
+						message: '学号不能少于5位',
+						trigger: ['blur', 'change']
+					}, {
+						required: true,
+						message: '请填写学号',
+						trigger: ['blur', 'change']
+					}],
+					password: [{
+						min: 8,
+						message: '密码不能少于8位',
+						trigger: ['blur', 'change']
+					}, {
+						required: true,
+						message: '请填写密码',
+						trigger: ['blur', 'change']
+					}]
+				},
+				errorType: ["border-bottom", "toast"],
+				// 自定义样式
+				customStyle: {
+					color: "#fff",
+					backgroundColor: "#ef2375",
+					// backgroundImage: "linear-gradient(45deg, #8765e1, #b171e6)",
+					marginTop: "60upx",
+					border: "none"
+				},
+				leftIconStyle: {
+					color: "#fff",
+					fontSize: "35upx"
+				}
+			}
+		},
+		onLoad() {
+			if(this.userInfo){
+				this.$u.route({
+					type: 'tab',
+					url: 'pages/system/index/index'
+				})
 			}
 		},
 		methods: {
-			onLoad() {
-				
-			},
-			// 获取用户输入的账号
-			user: function(e) {
-				this.id = e.target.value;
-			},
-			// 获取用户输入的密码
-			password: function(e) {
-				this.pw = e.target.value;
+			submit() {
+				console.log('asd')
+				this.$refs.uForm.validate(valid => {
+					if (valid) {
+						console.log('验证通过');
+						this.$u.api.login({
+							studentId: this.form.studentId,
+							password: this.form.password
+						}).then(res => {
+							console.log(res)
+							this.$refs.uToast.show({
+								title: '登录成功,即将跳转',
+								type: 'success',
+								url: 'pages/system/index/index',
+								isTab: true
+							})
+							this.$u.vuex('userInfo', res)
+							console.log('res:', JSON.stringify(this.userInfo))
+						}).catch(e => {
+							console.log('catch', e)
+							this.$refs.uToast.show({
+								title: e.data.msg,
+								type: 'warning',
+							})
+						})
+					}
+				});
+				console.log('dsa')
 			},
 			//注册
-			sigin: function() {
-				uni.navigateTo({
-					url: '../sgin/sgin'
+			sign() {
+				this.$u.route({
+					url: 'pages/system/sign/sign',
 				})
 			},
 			//忘记密码
-			forget: function() {
-				uni.navigateTo({
-					url: '../forgetPassword/forgetPassword'
+			forget() {
+				this.$u.route({
+					url: 'pages/system/forgetPassword/forgetPassword'
 				})
 			},
-			// button提交表单
-			formSubmit: function(e) {
-				
-			}
+		},
+		onReady() {
+			this.$refs.uForm.setRules(this.rules);
 		}
 	}
 </script>
 
-<style>
-	.page {
-		background-color: #FFFFFF;
+<style lang="scss" scoped>
+	.content {
+		// background-image: linear-gradient(45deg, #8765e1, #b171e6);
+		background-image: url(../../../static/images/login.png);
+		background-size: 100% 100%;
 		height: 100vh;
 		width: 100vw;
-		position: fixed;
+		color: #FFFFFF;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
-	.circle {
-		width: 375px;
-		height: 264px;
-		background: #efebeb;
-		border-radius: 0 0 50% 50%;
-		opacity: 1;
+	.container {
+		width: 90%;
+		height: 80%;
 	}
 
-	.title {
-		width: 120px;
-		height: 42px;
-		margin: 0 auto;
-		font-size: 30px;
-		font-family: PingFang SC;
-		font-weight: bold;
-		line-height: 42px;
-		color: rgba(255, 255, 255, 1);
-		opacity: 1;
-		position: relative;
-		top: 104px;
-	}
-
-	.inp {
-		margin: 0 auto;
-		padding-top: 20px;
-		width: 270px;
-		border-bottom: 1px solid rgba(245, 245, 245, 1);
-	}
-
-	.btn {
-		margin-top: 40px;
-	}
-
-	.shuru {
-		margin-top: 20px;
-	}
-
-	.sigin {
+	.header {
 		text-align: center;
-		margin-top: 20%;
-		font-size: 30rpx;
+		font-size: 50upx;
+		padding-top: 80upx;
+	}
+
+	.from {
+		padding: 0 80upx;
+		text-align: center;
+	}
+
+	.footer {
+		display: flex;
+		justify-content: center;
+		margin-top: 50upx;
+
+		view {
+			margin: 10upx;
+		}
 	}
 </style>

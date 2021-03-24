@@ -1,8 +1,9 @@
 <template>
 	<view class="page">
-		<view class="navBack">
+		<view class="navBack" @click="navBack">
 			<u-icon name="arrow-left" color="#fff" size="28"></u-icon> 返回
 		</view>
+		<u-toast ref="uToast" />
 		<view class="container">
 			<view class="header">
 				创建一个账号
@@ -15,8 +16,8 @@
 					<u-form-item label="姓名" prop="name">
 						<u-input v-model="form.name" />
 					</u-form-item>
-					<u-form-item label="学号" type="number" prop="studentId">
-						<u-input v-model="form.studenId" />
+					<u-form-item label="学号" type="number" prop="studentId" required>
+						<u-input v-model="form.studentId" />
 					</u-form-item>
 					<u-form-item label="年级">
 						<u-input v-model="form.grade" :disabled="true" @click="show=true" />
@@ -27,13 +28,13 @@
 					<u-form-item label="专业">
 						<u-input v-model="form.profession" :disabled="true" @click="show=true" />
 					</u-form-item>
-					<u-form-item label="密码" prop="password">
+					<u-form-item label="密码" prop="password" required>
 						<u-input v-model="form.password" type="password" :password-icon="true" />
 					</u-form-item>
 
 					<u-select v-model="show" mode="mutil-column-auto" :list="list" @confirm="confirmForm"></u-select>
 				</u-form>
-				<u-button shape="circle" :ripple="true" ripple-bg-color="#8765e1" @click="sign"
+				<u-button shape="circle" :ripple="true" ripple-bg-color="#8765e1" @click="submit"
 					:custom-style="customStyle">
 					注册</u-button>
 			</view>
@@ -49,13 +50,13 @@
 		data() {
 			return {
 				form: {
-					user: '',
-					name: '',
-					studenId: '',
-					grade: '',
-					department: '',
-					profession: '',
-					password: ''
+					user: 'asd',
+					name: 'dsa',
+					studentId: '123456',
+					grade: '2020',
+					department: '艺术系',
+					profession: '音乐学',
+					password: 'asddsa12'
 				},
 				rules: {
 					studentId: [{
@@ -81,7 +82,7 @@
 				customStyle: {
 					color: "#fff",
 					// backgroundColor: "#8765e1",
-					backgroundImage: "linear-gradient(45deg, #8765e1, #b171e6)",
+					backgroundImage: "linear-gradient(135deg, #6d448e, #efb8dd)",
 					marginTop: "60upx"
 				},
 				show: false,
@@ -289,8 +290,32 @@
 			}
 		},
 		methods: {
-			sign() {
-
+			submit(e) {
+				this.$refs.uForm.validate(valid => {
+					if (valid) {
+						this.$u.api.sign({
+							user: this.form.user,
+							password: this.form.password,
+							studentId: this.form.studentId,
+							name: this.form.name,
+							department: this.form.department,
+							profession: this.form.profession,
+							grade: this.form.grade
+						}).then(res => {
+							console.log(res)
+							this.$refs.uToast.show({
+								title: '注册成功,即将跳转',
+								type: 'success',
+								url: 'pages/system/login/login'
+							})
+						}).catch(e => {
+							this.$refs.uToast.show({
+								title: e.msg,
+								type: 'warning',
+							})
+						})
+					}
+				})
 			},
 			confirmForm(e) {
 				console.log(e[0].value, e[1].value, e[2].value)
@@ -312,7 +337,7 @@
 
 <style lang="scss" scoped>
 	.page {
-		background-image: linear-gradient(45deg, #8765e1, #b171e6);
+		background-image: linear-gradient(45deg, #6d448e, #efb8dd);
 		width: 100vw;
 		height: 100vh;
 		display: flex;

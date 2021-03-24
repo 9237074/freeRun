@@ -1,9 +1,7 @@
 <template>
 	<view id="main">
 		<!-- 导航栏 -->
-		<cu-custom bgColor="bg-gradual-theme" :isBack="false">
-			<block slot='content'>晨读</block>
-		</cu-custom>
+		readpage
 		<!-- content -->
 		<!-- 列表渲染阅读主题 -->
 		<view class="card" v-for="(item,index) in msg" :key="item.id">
@@ -13,7 +11,7 @@
 				<!-- <image src="../../static/logo.png" style="width: 70px;height: 70px;"></image> -->
 			</view>
 			<!-- 右侧主内容 -->
-			<view class="card-body">
+			<!-- <view class="card-body">
 				<view style="font-size:16px;font-weight:800;font-family:Microsoft YaHei Light;">
 					主题:{{item.theme}}
 				</view>
@@ -22,16 +20,16 @@
 				</view>
 				<view style="font-size:12px;color:#AAA;margin: 0;">
 					<view style="display:inline-block;">
-						<!-- <view class="iicon" style="background-image: url(../../static/clock.png);vertical-align:middle;" /> -->
+						<view class="iicon" style="background-image: url(../../static/clock.png);vertical-align:middle;" />
 							<text style="vertical-align:middle;">{{item.readTime}}</text>
 						</view>
 						<view style="display:inline-block;margin-left:10px;color:#F7A442;">
-							<!-- <view class="iicon" style="background-image: url(../../static/loca.png);vertical-align:middle;" /> -->
+							<view class="iicon" style="background-image: url(../../static/loca.png);vertical-align:middle;" />
 								<text style="vertical-align:middle;">{{item.readSite}}</text>
 							</view>
 						</view>
 						<view style="font-size:11px;line-height:30px;color:#AAA;margin-top:10px">
-							<!-- <view class="iicon" style="background-image: url(../../static/person.png);vertical-align:middle;" /> -->
+							<view class="iicon" style="background-image: url(../../static/person.png);vertical-align:middle;" />
 								<text style="vertical-align:middle;">负责人:{{item.people}}</text>
 							</view>
 						</view>
@@ -43,8 +41,9 @@
 						</view>
 					</view>
 				</view>
-			</view>
+			</view> -->
 		</view>
+		<u-tabbar :list='tabbar' :mid-button="true"></u-tabbar>
 	</view>
 </template>
 

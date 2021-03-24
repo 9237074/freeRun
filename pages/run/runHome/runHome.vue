@@ -1,9 +1,6 @@
 <template>
 	<view class="page" style="">
-		<cu-custom bgColor="bg-gradual-theme" :isBack="false">
-			<block slot='content'>跑步中心</block>
-			<!-- <block slot='right' style="color: #FFFFFF;">规则</block> -->
-		</cu-custom>
+		runpage
 		<view style="position:fixed;">
 			<view class="bg">
 				<!-- <image src="../../static/run_bg.png" style="width: 100vw;height: 90vh;" mode=""></image> -->

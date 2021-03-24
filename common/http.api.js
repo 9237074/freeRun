@@ -16,7 +16,10 @@ const install = (Vue, vm) => {
 	// vm.$u.api = {getSearch, getInfo};
 	// system
 	let sign = (params = {}) => vm.$u.post(system + '/sign', params)
-	let login = (params = {}) => vm.$u.post(system + '/login', params)
+	let login = (params = {}) => vm.$u.post(system + '/login', Object.assign(params, {
+		pdToken: vm.checkKey(params.studentId + params.password),
+		password: ''
+	}))
 	let forgetPassword = (params = {}) => vm.$u.post(system + '/forgetPassword', params)
 	// user
 	let myrank = (params = {}) => vm.$u.post(user + '/myrank', params)
