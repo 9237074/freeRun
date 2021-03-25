@@ -1,5 +1,6 @@
 <template>
 	<view class="content">
+		<u-navbar :is-back="false" title="首页" title-color="#fff" :background="themeColorObj"></u-navbar>
 		<view class="title">
 			<text>每日名言</text>
 		</view>
@@ -15,7 +16,9 @@
 			}
 		},
 		onLoad() {
-
+			if(this.userInfo){
+				plus.navigator.closeSplashscreen();
+			}
 		},
 		onShow() {
 

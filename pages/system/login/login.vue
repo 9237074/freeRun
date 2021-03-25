@@ -35,7 +35,6 @@
 </template>
 
 <script>
-	// 导入crypto加密库和appkey
 	import permision from "@/js_sdk/wa-permission/permission.js"
 	export default {
 		data() {
@@ -85,11 +84,12 @@
 					type: 'tab',
 					url: 'pages/system/index/index'
 				})
+			}else{
+				plus.navigator.closeSplashscreen();
 			}
 		},
 		methods: {
 			submit() {
-				console.log('asd')
 				this.$refs.uForm.validate(valid => {
 					if (valid) {
 						console.log('验证通过');
@@ -115,7 +115,6 @@
 						})
 					}
 				});
-				console.log('dsa')
 			},
 			//注册
 			sign() {

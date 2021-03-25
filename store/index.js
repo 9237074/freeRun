@@ -40,6 +40,10 @@ const store = new Vuex.Store({
 		vuex_token: lifeData.vuex_token ? lifeData.vuex_token : '',
 		// 如果vuex_version无需保存到本地永久存储，无需lifeData.vuex_version方式
 		vuex_version: '0.0.1',
+		themeColorObj: {
+			backgroundImage: 'linear-gradient(45deg, #6d448e, #efb8dd)'
+		},
+		themeColorText: 'linear-gradient(45deg, #6d448e, #efb8dd)',
 		tabbar: [{
 				iconPath: "home",
 				selectedIconPath: "home-fill",
@@ -76,7 +80,7 @@ const store = new Vuex.Store({
 				selectedIconPath: "account-fill",
 				pagePath: "/pages/user/me/me",
 				text: '我的',
-				count: 23,
+				count: 0,
 				isDot: false,
 				customIcon: false,
 			},

@@ -1,6 +1,7 @@
 //wx0d924d10e89a476b
 <script>
 	import Vue from 'vue'
+	import store from '@/store'
 	import permision from 'js_sdk/wa-permission/permission.js'
 	export default {
 		onLaunch: function() {
@@ -27,14 +28,14 @@
 	}
 	@import "./static/fonts/iconfont.css";
 	
-	.custom-icon {
-		/* 引用上面声明的"custom-icon"字体 */
-		font-family: "custom-icon" !important;
-		font-size: 16px;
-		font-style: normal;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-	}
+	// .custom-icon {
+	// 	/* 引用上面声明的"custom-icon"字体 */
+	// 	font-family: "custom-icon" !important;
+	// 	font-size: 16px;
+	// 	font-style: normal;
+	// 	-webkit-font-smoothing: antialiased;
+	// 	-moz-osx-font-smoothing: grayscale;
+	// }
 	
 	/* 字体图标的前缀为"custom-icon-" */
 	.custom-icon-copy:before {
