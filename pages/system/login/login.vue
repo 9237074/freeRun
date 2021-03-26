@@ -36,6 +36,9 @@
 
 <script>
 	import permision from "@/js_sdk/wa-permission/permission.js"
+	import {
+		mapState
+	} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -79,13 +82,16 @@
 			}
 		},
 		onLoad() {
-			if(this.userInfo){
+			console.log(this.vuex_userInfo)
+			if(this.vuex_userInfo.token){
 				this.$u.route({
 					type: 'tab',
 					url: 'pages/system/index/index'
 				})
 			}else{
-				plus.navigator.closeSplashscreen();
+				// #ifdef APP-PLUS
+					plus.navigator.closeSplashscreen();
+				// #endif
 			}
 		},
 		methods: {
@@ -104,8 +110,8 @@
 								url: 'pages/system/index/index',
 								isTab: true
 							})
-							this.$u.vuex('userInfo', res)
-							console.log('res:', JSON.stringify(this.userInfo))
+							this.$u.vuex('vuex_userInfo', res)
+							console.log(this.vuex_userInfo)
 						}).catch(e => {
 							console.log('catch', e)
 							this.$refs.uToast.show({

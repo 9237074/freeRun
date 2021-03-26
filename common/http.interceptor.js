@@ -14,7 +14,8 @@ const install = (Vue, vm) => {
 	// 请求拦截部分，如配置，每次请求前都会执行，见上方说明
 	Vue.prototype.$u.http.interceptor.request = (config) => {
 		// ......
-		config.header.authorization = vm.userInfo.token;
+		config.header.authorization = vm.vuex_userInfo.token || '';
+		// console.log(vm.vuex_userInfo.token)
 		if(config.url == '/moble/system/sign') config.header.noToken = true;
 		if(config.url == '/moble/system/login') config.header.noToken = true;
 		if(config.url == '/moble/system/forgetPassword') config.header.noToken = true;
@@ -24,7 +25,7 @@ const install = (Vue, vm) => {
 	Vue.prototype.$u.http.interceptor.response = (res) => {
 		console.log(res)
 		const code = res.code || res.errorCode
-		console.log({code})
+		// console.log({code})
 		switch(code){
 			case 200:
 				return res.data
