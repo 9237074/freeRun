@@ -85,7 +85,7 @@ const store = new Vuex.Store({
 				customIcon: false,
 			},
 		],
-		current: 0
+		// current: 0
 	},
 	mutations: {
 		$uStore(state, payload) {

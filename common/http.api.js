@@ -29,10 +29,13 @@ const install = (Vue, vm) => {
 	let readcheck = (params = {}) => vm.$u.post(read + '/readcheck', params)
 	let readrank = (params = {}) => vm.$u.post(read + '/readrank', params)
 	let readrecord = (params = {}) => vm.$u.post(read + '/readrecord', params)
+	let readgrade = (params = {}) => vm.$u.post(read + '/readgrade', params)
+	let readpage = (params = {}) => vm.$u.post(read + '/readpage', params)
 	// run
 	let runcheck = (params = {}) => vm.$u.post(run + '/runcheck', params)
 	let runrank = (params = {}) => vm.$u.post(run + '/runrank', params)
 	let runrecord = (params = {}) => vm.$u.post(run + '/runrecord', params)
+	let rungrade = (params = {}) => vm.$u.post(run + '/rungrade', params)
 	vm.$u.api = {
 		// system
 		login,
@@ -46,10 +49,13 @@ const install = (Vue, vm) => {
 		readcheck,
 		readrank,
 		readrecord,
+		readgrade,
+		readpage,
 		// run
 		runcheck,
 		runrank,
-		runrecord
+		runrecord,
+		rungrade
 	}
 }
 

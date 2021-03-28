@@ -2,7 +2,7 @@
 	<view class="content">
 		<u-toast ref="uToast" />
 		<u-navbar :is-back="false" title="首页" title-color="#fff" :background="themeColorObj"></u-navbar>
-		<u-card v-for="item in quotes" :title="item.author" subTitle="作者" padding="30" :show-foot="true">
+		<u-card v-for="(item, index) in quotes" :title="item.author" subTitle="作者" padding="30" :show-foot="true" :key="index">
 			<view class="" slot="body">
 				<view class="u-body-item-title u-line-2">{{item.content}}</view>
 			</view>

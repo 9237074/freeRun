@@ -1,5 +1,42 @@
 <template>
 	<view>
+		<view class="header">
+
+		</view>
+		<view class="progress">
+			<u-circle-progress width="500" border-width="30" bg-color="rgba(255,255,255,0)" inactive-color="#dfc7f8"
+				active-color="#b674ed" :percent="33">
+				<view class="u-progress-content">
+					<view>查找中</view>
+					<view>10</view>
+					<view>目标 30</view>
+				</view>
+			</u-circle-progress>
+		</view>
+		<view class="target">
+			<u-row gutter="4">
+				<u-col span="1">
+					<view class="">
+						5
+						KM
+					</view>
+					<u-line color="#ffffff" direction="col" />
+				</u-col>
+				<u-col span="2">
+					<view class="">
+						00:30:00
+						TIME
+					</view>
+				</u-col>
+				<u-col span="1">
+					<u-line color="#fff" direction="col" />
+					<view class="">
+						8
+						KA
+					</view>
+				</u-col>
+			</u-row>
+		</view>
 		<u-tabbar :list='tabbar' :mid-button="true"></u-tabbar>
 	</view>
 </template>
@@ -100,5 +137,28 @@
 		background-image: linear-gradient(45deg, #6d448e, #efb8dd);
 		width: 100%;
 		height: 100%;
+	}
+
+	.progress {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #FFFFFF;
+		font-size: 35upx;
+
+		.u-progress-content {
+			text-align: center;
+
+			& :first-child {}
+
+			& :nth-child(2) {
+				font-size: 50upx;
+				margin: 15upx;
+			}
+		}
+	}
+	.target{
+		color: #ffffff;
+		
 	}
 </style>

@@ -82,7 +82,6 @@
 			}
 		},
 		onLoad() {
-			console.log(this.vuex_userInfo)
 			if(this.vuex_userInfo.token){
 				this.$u.route({
 					type: 'tab',
