@@ -25,7 +25,7 @@
 				"navigationBarBackgroundColor": "#FFFFFF",
 				"backgroundColor": "#FFFFFF"
 			}
-		},{
+		}, {
 			"path": "pages/system/index/index",
 			"style": {
 				"navigationBarTitleText": "首页",
@@ -56,6 +56,16 @@
 				"navigationBarTitleText": "跑步首页",
 				"navigationBarBackgroundColor": "#FFFFFF",
 				"backgroundColor": "#FFFFFF"
+			}
+		}, {
+			"path": "pages/run/running/running",
+			"style": {
+				"navigationBarTitleText": "运动中",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"backgroundColor": "#FFFFFF"
+				// "app-plus": { //app平台
+				// 	"bounce": "none" //禁止滚动
+				// }
 			}
 		}, {
 			"path": "pages/user/rankHome/rankHome",

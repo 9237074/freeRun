@@ -28,18 +28,20 @@
 
 		</view>
 		<view class="menu">
-			<view>
-				<u-icon name="hourglass"></u-icon>
-				我的排行
-			</view>
-			<view>
-				<u-icon name="hourglass"></u-icon>
-				个人资料
-			</view>
-			<view>
-				<u-icon name="hourglass"></u-icon>
-				签到码
-			</view>
+			<u-row gutter="12" justify="center">
+				<u-col span="4" text-align='center'>
+					<u-icon name="hourglass"></u-icon>
+					我的排行
+				</u-col>
+				<u-col span="4" text-align='center'>
+					<u-icon name="hourglass"></u-icon>
+					个人资料
+				</u-col>
+				<u-col span="4" text-align='center'>
+					<u-icon name="hourglass"></u-icon>
+					签到码
+				</u-col>
+			</u-row>
 		</view>
 		<view class="card run-card">
 			<view class="title">运动成绩</view>
@@ -112,12 +114,12 @@
 			return {
 				paddingTop: 44,
 				src: 'http://pic2.sc.chinaz.com/Files/pic/pic9/202002/hpic2119_s.jpg',
-				read:{
+				read: {
 					morningTimes: 0,
 					duration: 0,
 					fraction: 0
 				},
-				run:{
+				run: {
 					runTimes: 0,
 					mileage: 0,
 					duration: 0,
@@ -133,11 +135,15 @@
 				this.paddingTop = 48
 			}
 			this.$u.api.readgrade().then(res => {
-				console.log({res})
+				console.log({
+					res
+				})
 				this.read = res
 			})
 			this.$u.api.rungrade().then(res => {
-				console.log({res})
+				console.log({
+					res
+				})
 				this.run = res
 			})
 		},
@@ -190,8 +196,12 @@
 
 <style scoped lang="scss">
 	.userInfo {
-		background-image: linear-gradient(45deg, #6d448e, #efb8dd);
-		height: 400upx;
+		// background-image: linear-gradient(45deg, #6d448e, #efb8dd);
+		// background-image: url('@/static/images/meBg.png');
+		background-image: url(../../../static/images/meBg.png);
+		background-size: 100% 100%;
+		// background-image: url(../../../static/images/login.png);
+		height: 500upx;
 		padding: 0 50upx;
 		color: #FFFFFF;
 		overflow: hidden;
@@ -223,11 +233,7 @@
 	}
 
 	.menu {
-
-		&>view {
-			display: inline-block;
-			width: 30%;
-		}
+		margin-bottom: 20upx;
 	}
 
 	.card {
@@ -236,48 +242,51 @@
 		padding: 10upx;
 		border-radius: 20upx;
 		height: 300upx;
-		box-shadow:0px 3px 6px rgba(0,0,0,0.12);
-		.title{
+		box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.12);
+
+		.title {
 			margin: 10upx 20upx;
 		}
-		.card-body{
+
+		.card-body {
 			display: flex;
 			margin-top: 20upx;
 		}
-		.progress{
+
+		.progress {
 			flex: 1;
 			display: flex;
 			justify-content: center;
 		}
-		.grade{
+
+		.grade {
 			margin-left: 20upx;
 			flex: 1;
 			display: flex;
 			flex-direction: column;
 			align-items: between;
 			justify-content: center;
-			.grade-item{
+
+			.grade-item {
 				display: flex;
 				align-items: center;
-				.mark{
+
+				.mark {
 					width: 15upx;
 					height: 15upx;
 					margin: 10upx;
 					background-color: green;
 				}
-				.grade-item-content{
+
+				.grade-item-content {
 					overflow: hidden;
 				}
 			}
-			
+
 		}
 	}
-	.run-card {
-		
-	}
-	
-	.read-card {
-		
-	}
-	
+
+	.run-card {}
+
+	.read-card {}
 </style>

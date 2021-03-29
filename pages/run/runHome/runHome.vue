@@ -1,38 +1,36 @@
 <template>
-	<view>
-		<view class="header">
-
+	<view id="page">
+		<view class="header" :style="{'padding-top': paddingTop + 'px'}">
+			<u-icon name="question-circle" color="#fff"></u-icon>
 		</view>
 		<view class="progress">
 			<u-circle-progress width="500" border-width="30" bg-color="rgba(255,255,255,0)" inactive-color="#dfc7f8"
 				active-color="#b674ed" :percent="33">
-				<view class="u-progress-content">
-					<view>查找中</view>
-					<view>10</view>
-					<view>目标 30</view>
-				</view>
 			</u-circle-progress>
+			<view class="u-progress-content">
+				<view>已打卡次数</view>
+				<view>10</view>
+				<view class="button-start"  @click="startRun">start</view>
+			</view>
 		</view>
 		<view class="target">
-			<u-row gutter="4">
-				<u-col span="1">
-					<view class="">
-						5
-						KM
-					</view>
-					<u-line color="#ffffff" direction="col" />
-				</u-col>
-				<u-col span="2">
-					<view class="">
-						00:30:00
-						TIME
+			<u-row gutter="12" justify-content="between">
+				<u-col span="3" text-align='center'>
+					<view class="target-item">
+						<view>5</view>
+						<view>KM</view>
 					</view>
 				</u-col>
-				<u-col span="1">
-					<u-line color="#fff" direction="col" />
-					<view class="">
-						8
-						KA
+				<u-col span="6" text-align='center'>
+					<view class="target-item">
+						<view>00:30:00</view>
+						<view>TIME</view>
+					</view>
+				</u-col>
+				<u-col span="3" text-align='center'>
+					<view class="target-item">
+						<view>8</view>
+						<view>KA</view>
 					</view>
 				</u-col>
 			</u-row>
@@ -45,85 +43,25 @@
 	export default {
 		data() {
 			return {
+				paddingTop: 48,
 				times: 0,
 				aims: 60
 			}
 		},
-		onShow: function() {
+		onShow() {
 
 		},
 		methods: {
-			submit: async function(e) {
-				let that = this;
-				//提示注意事项
-				if (await this.checkLocation()) {
-					//判断任务时间
-					var today = new Date()
-					var getHours = null;
-					var getMinutes = null;
-					if (today.getHours() < 10) {
-						getHours = '0' + today.getHours();
-					} else {
-						getHours = String(today.getHours());
-					}
-					if (today.getMinutes() < 10) {
-						getMinutes = '0' + today.getMinutes();
-					} else {
-						getMinutes = String(today.getMinutes());
-					}
-					var shijian = getHours + getMinutes;
-					// if(that.globalData.studentId == '172720158'){
-					shijian = '0600'
-					// }else{
-					// 	console.log('正常用户判断时间');
-					// }
-					if (that.globalData.studentId == '172713172') {
-						shijian = '0600'
-					} else {
-						console.log('正常用户判断时间');
-					}
-					// shijian = '0600'
-					if (shijian >= '0600' && shijian <= '0730') {
-						// 判断当前时间与完成时间
-						if (parseInt(that.globalData.runTime / 86400) < parseInt(new Date().getTime() / 86400000) ||
-							that.globalData.runTime == null) {
-							uni.navigateTo({
-								url: '../running/running'
-							})
-						} else {
-							uni.showToast({
-								title: '今日任务已完成',
-								duration: 2000
-							})
-						}
-					} else if (shijian >= '1730' && shijian <= '2200') {
-						// 判断当前时间与完成时间
-						if (parseInt(that.globalData.runTime / 86400) < parseInt(new Date().getTime() / 86400000) ||
-							that.globalData.runTime == null) {
-							uni.navigateTo({
-								url: '../running/running'
-							})
-						} else {
-							uni.showToast({
-								title: '今日任务已完成',
-								duration: 2000
-							})
-						}
-					} else {
-						uni.showToast({
-							title: '未到跑步时间',
-							icon: 'none',
-							duration: 2000
-						});
-					}
-				}
+			startRun(e) {
+				console.log('e')
+				this.$u.route('/pages/run/running/running')
 			},
-			rule: function() {
+			rule() {
 				uni.navigateTo({
 					url: '../runRule/runRule'
 				})
 			},
-			question: function() {
+			question() {
 				uni.navigateTo({
 					url: '../runQuestion/runQuestion'
 				})
@@ -133,32 +71,47 @@
 </script>
 
 <style scoped lang="scss">
-	page {
+	#page {
 		background-image: linear-gradient(45deg, #6d448e, #efb8dd);
 		width: 100%;
-		height: 100%;
+		height: 100vh;
 	}
-
+	.header{
+		margin: 30upx;
+		display: flex;
+		justify-content: flex-end;
+	}
 	.progress {
+		position: relative;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		color: #FFFFFF;
 		font-size: 35upx;
-
-		.u-progress-content {
-			text-align: center;
-
-			& :first-child {}
-
-			& :nth-child(2) {
-				font-size: 50upx;
-				margin: 15upx;
-			}
+	}
+	.u-progress-content {
+		position: absolute;
+		text-align: center;
+	
+		& :first-child {}
+	
+		& :nth-child(2) {
+			font-size: 50upx;
+			margin: 15upx;
 		}
+	}
+	.button-start{
+		background-color: #FFFFFF;
+		color: #b87cb9;
+		padding: 15upx;
+		margin-top: 35upx;
+		border-radius: 50upx;
 	}
 	.target{
 		color: #ffffff;
-		
+		margin-top: 50upx;
+		.target-item{
+			margin: 10upx;
+		}
 	}
 </style>

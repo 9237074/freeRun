@@ -1,65 +1,43 @@
 <template>
-	<view class="content">
-		<cu-custom bgColor="bg-gradual-theme" :isBack="false">
-			<block slot='content'>跑步中心</block>
-		</cu-custom>
-		<map :latitude="markers[0].latitude" :longitude="markers[0].longitude" :markers="markers" :polyline="polyline"
-		 style="width: 100vw;height: 50vh;">
-			<cover-view style="color:rgba(177,128,68,1);">
-				当前打卡数:{{signCount}}|{{markers[0].latitude+"-"+markers[0].longitude}}
-			</cover-view>
+	<view class="page">
+		<map class="map" :style="{'width': phoneWidth+'px','height': phoneHeight + 48 + 'px'}"
+			:latitude="markers[0].latitude" :longitude="markers[0].longitude" :markers="markers" :scale="17" :show-location="true">
 		</map>
-		<view class="" style="width: 100vw;height: 40vh;background-color: #FFFFFF;">
-			<!-- distance -->
-			<view class="" style="width: 100vw;text-align: center;padding: 10px;">
-				<text style="font-size:42px;font-weight:bold;line-height:42px;color:rgba(177,128,68,1);">{{(distance/1000).toFixed(2)}}</text>
-				<text style="font-size:16px;font-weight:bold;line-height:22px;color:rgba(177,128,68,1);">km</text>
-			</view>
-			<!-- 分割线 -->
-			<view class="" style="width: 90vw;height: 1px;background-color: #C58240;margin: 0 auto;margin-top: 10px;"></view>
-			<!--  时长 卡路里 速度  -->
-			<view class="card1">
-				<view class="num1">
-					{{parseInt(time/3600)}}:{{parseInt(time%3600/60)}}:{{parseInt(time%3600%60)}}
+		<cover-view class="">
+			<!-- 当前打卡数:{{signCount}}|{{markers[0].latitude}} -{{markers[0].longitude}} -->
+			<view class="card-cover-view">
+				<view class="card-item card-time">
+					<text class="text">{{parseInt(time/3600)<10?0:''}}{{parseInt(time/3600)}}:{{parseInt(time%3600/60)<10?0:''}}{{parseInt(time%3600/60)}}:{{parseInt(time%3600%60)<10?0:''}}{{parseInt(time%3600%60)}}</text>
+					<text class="text">时常</text>
 				</view>
-				<view class="num1">
-					{{(distance*0.06).toFixed(2)}}
+				<view class="card-item card-distance">
+					<text class="text">{{(distance*0.06).toFixed(2)}}</text>
+					<text class="text">卡路里</text>
 				</view>
-				<view class="num1">
-					{{speed !== 0 ? speed +'m/s' : '0'}}
+				<view class="card-item card-speed">
+					<text class="text">{{speed !== 0 ? speed +'m/s' : '0'}}</text>
+					<text class="text">速度</text>
 				</view>
 			</view>
-			<!--  时长 卡路里 速度  -->
-			<view class="card2">
-				<view class="str1">
-					<text>时长</text>
-				</view>
-				<view class="str1">
-					<text>卡路里</text>
-				</view>
-				<view class="str1">
-					<text>速度</text>
-				</view>
+		</cover-view>
+		<cover-view class="card-button-cover" :style="{'margin-top': phoneHeight*0.62 + 'px'}">
+			<view class="card-button">
+				<image class="card-image" v-if="active" src="@/static/images/running/goon.png" @longpress="stoplocation"></image>
+				<image class="card-image" v-if="!active" @click="active=true;" src="@/static/images/running/goon.png"></image>
+				<image class="card-image" v-if="!active" @click="over" src="@/static/images/running/goon.png"></image>
 			</view>
-			<view class="" style="width: 100%;">
-				<image v-if="active" src="../../static/suspend.svg" style="width:28vw;height: 28vw;margin-left: 35vw;margin-top: 2.5vh;"
-				 @longpress="stoplocation"></image>
-				<image v-if="!active" @click="active=true;getLocation()" src="../../static/goon.svg" style="display:inline-block;width: 28vw;height: 28vw;margin-left: 22vw;margin-top: 2.5vh;"></image>
-				<image v-if="!active" @click="over" src="../../static/over.svg" style="display:inline-block;width: 28vw;height: 28vw;margin-top: 2.5vh;"></image>
-			</view>
-			<!-- <button type="default" @click="filterPoints" v-show="isFilter">过滤</button>
-			<button type="default" @click="filterPoints" v-show="!isFilter">不过滤</button> -->
-		</view>
+		</cover-view>
 	</view>
 </template>
 
 <script>
-	import GpsTool from '../../util/gpsTools.js'
-	const crypto = require('crypto');
-	// const music = require('../../static/aduio/01.mp3')
+	// import GpsTool from '@/util/gpsTools.js'
+	// const music = require('@/static/aduio/01.mp3')
 	export default {
 		data() {
 			return {
+				phoneHeight: '',
+				phoneWidth: '',
 				// gps日志
 				// 过滤后
 				gps: [],
@@ -73,7 +51,7 @@
 					id: 1,
 					latitude: 26.002194,
 					longitude: 119.448814, //,
-					iconPath: '../../static/locall.png',
+					iconPath: '@/static/locall.png',
 					width: 10,
 					height: 10
 				}],
@@ -91,7 +69,6 @@
 					['东12宿舍楼道路旁', 119.452183, 26.003010],
 					['校车处', 119.450409, 26.003310],
 					['田径场北', 119.4495980000, 26.0031870000],
-					['ceshi', 119.44851500780834, 26.00583145786685]
 				],
 				// 轨迹图
 				polyline: [{
@@ -113,22 +90,35 @@
 			}
 		},
 		onLoad() {
-			this.initPoint()
-			this.getLocation()
+			// this.initPoint()
+			// this.getLocation()
+			setInterval(() => {
+				this.time = this.time + 1
+			}, 1000)
 		},
 		onBackPress(e) {
 			// return true 表示禁止默认返回
 			return true
 		},
+		onReady() {
+			// 计算屏幕高度 ，宽度
+			uni.getSystemInfo({
+				success:res => {
+					this.phoneHeight = res.windowHeight;
+					this.phoneWidth = res.windowWidth;
+					console.log(res)
+				}
+			});
+		},
 		methods: {
 			// 初始化打卡点
-			initPoint: function() {
+			initPoint() {
 				this.point.forEach(item => {
 					let point = {}
 					point.id = this.markers.length + 1
 					point.latitude = item[2]
 					point.longitude = item[1]
-					point.iconPath = "../../static/check.png"
+					point.iconPath = "@/static/check.png"
 					point.width = 10
 					point.height = 10
 					point.callout = {
@@ -139,10 +129,10 @@
 					this.markers.push(point)
 				})
 			},
-			getLocationSync(){
-				return new Promise((resolve,reject) => {
+			getLocationSync() {
+				return new Promise((resolve, reject) => {
 					uni.getLocation({
-						type:"gcj02",
+						type: "gcj02",
 						success: (res) => {
 							resolve(res)
 						},
@@ -152,7 +142,7 @@
 					})
 				})
 			},
-			getLocation: function() {
+			getLocation() {
 				// 开启 时间 定时器
 				// this.timeSetInterval = setInterval(() => {
 				// 	// this.time = new Date().getTime() / 1000 - this.startTime
@@ -163,10 +153,10 @@
 				// 	}
 				// 	this.time++
 				// }, 1000)
-				// this.timeSetIntervalGps = setInterval(async()=>{
-				// 	let gpsInfo = await this.getLocationSync()
-				// 	this.handleLocation(gpsInfo)
-				// },1000)
+				this.timeSetIntervalGps = setInterval(async()=>{
+					let gpsInfo = await this.getLocationSync()
+					this.handleLocation(gpsInfo)
+				},1000)
 			},
 			// 处理定位信息
 			handleLocation(e) {
@@ -177,23 +167,24 @@
 					longitude: e.longitude,
 					timestamp: curTime
 				}
-				
+
 				// 合并this.markers
 				this.markers[0] = Object.assign(this.markers[0], realGps)
-				if(!this.tempGps.latitude || !this.tempGps.longitude){
+				if (!this.tempGps.latitude || !this.tempGps.longitude) {
 					this.tempGps = JSON.parse(JSON.stringify(realGps))
 					return
 				}
 				// 判断当前gps跟上一个gps是否一样
-				if(this.tempGps.latitude === realGps.latitude && this.tempGps.longitude === realGps.longitude){
+				if (this.tempGps.latitude === realGps.latitude && this.tempGps.longitude === realGps.longitude) {
 					// console.log('updateTime:', this.tempGps.timestamp, realGps.timestamp, realGps.timestamp - this.tempGps.timestamp)
 					this.tempGps.timestamp = realGps.timestamp
 					return
 				}
 				console.log('不相等。')
 				let gpsTool = new GpsTool()
-				let tempDistance = gpsTool.distance(this.tempGps.latitude,this.tempGps.longitude,realGps.latitude,realGps.longitude)
-				let tempSpeed = tempDistance/parseInt(realGps.timestamp - this.tempGps.timestamp)
+				let tempDistance = gpsTool.distance(this.tempGps.latitude, this.tempGps.longitude, realGps.latitude,
+					realGps.longitude)
+				let tempSpeed = tempDistance / parseInt(realGps.timestamp - this.tempGps.timestamp)
 				try {
 					let logStorage = uni.getStorageSync('logStorage') || []
 					logStorage.push({
@@ -208,10 +199,11 @@
 					console.log('获取出错了:', e)
 				}
 				console.log()
-				console.log(this.tempGps,realGps,'距离:',tempDistance,'时间:',parseInt(realGps.timestamp - this.tempGps.timestamp),'速度:',tempDistance/parseInt(realGps.timestamp - this.tempGps.timestamp))
-				if(tempSpeed > 6.25)return
+				console.log(this.tempGps, realGps, '距离:', tempDistance, '时间:', parseInt(realGps.timestamp - this.tempGps
+					.timestamp), '速度:', tempDistance / parseInt(realGps.timestamp - this.tempGps.timestamp))
+				if (tempSpeed > 6.25) return
 				this.tempGps = JSON.parse(JSON.stringify(realGps))
-				this.distance+=tempDistance
+				this.distance += tempDistance
 				this.speed = tempSpeed.toFixed(2)
 				this.polyline[0].points.push({
 					latitude: realGps.latitude,
@@ -228,7 +220,7 @@
 			},
 			// 提交
 			over: function() {
-				
+
 			},
 			// 检查时间 大于600秒 小于7200秒
 			checkTime: function() {
@@ -262,7 +254,7 @@
 				}
 			},
 			// 判断打卡
-			isSign: function(realGps) {
+			isSign(realGps) {
 				const gpsTool = new GpsTool()
 				let signCount = this.point.filter(item => {
 					let distance = gpsTool.distance(realGps.latitude, realGps.longitude, item[2], item[1])
@@ -281,7 +273,7 @@
 				}
 			},
 			// 检查打卡点数量 需大于2个点
-			checkSign: function() {
+			checkSign() {
 				if (this.signCount >= 2) {
 					return true
 				} else {
@@ -306,7 +298,7 @@
 				}
 			},
 			// 检查数量 需大于2000
-			checkDistance: function() {
+			checkDistance() {
 				if (this.distance >= 2000) {
 					return true
 				} else {
@@ -333,79 +325,43 @@
 	}
 </script>
 
-<style>
-	.content {
-		width: 100vw;
-		height: 100vh;
+<style scoped lang="scss">
+	.map {
+		position: absolute;
 	}
 
-	.title {
-		margin-left: 2px;
-		color: rgba(51, 51, 51, 1);
-		opacity: 1;
+	.card-cover-view {
+		background-color: #FFFFFF;
+		padding: 20upx;
+		margin: 48px 20upx 20upx 20upx;
+		border-radius: 20upx;
+		flex-direction: row;
+		justify-content:center;
 	}
-
-	.card {}
-
-	.saying {
-		width: 96.5vw;
-		height: 56px;
-		background: rgba(124, 181, 134, 1);
-		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.16);
-		opacity: 1;
-		margin-left: 2vw;
-		position: relative;
-		top: -11px;
-	}
-
-	.box {
-		margin: 20upx 0;
-	}
-
-	.box view.cu-bar {
-		margin-top: 20upx;
-	}
-
-	.page {
-		width: 100vw;
-		height: 100vh;
-	}
-
-	.inline-b {
-		display: inline;
-	}
-
-	.card1 {
-		width: 90vw;
-		margin-left: 5vw;
-	}
-
-	.card2 {
-		width: 90vw;
-		margin-left: 5vw;
-	}
-
-	.num1 {
-		width: 30vw;
+	.card-item{
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 		text-align: center;
-		display: inline-block;
-		font-size: 18px;
-		font-family: PingFang SC;
-		font-weight: bold;
-		line-height: 25px;
-		color: rgba(177, 128, 68, 1);
-		padding: 5px;
+		margin: 20upx;
+		// width: 200upx;
+		// height: 200upx;
 	}
-
-	.str1 {
-		width: 30vw;
-		text-align: center;
-		display: inline-block;
-		font-size: 12px;
-		font-family: PingFang SC;
-		font-weight: 400;
-		line-height: 17px;
-		color: rgba(224, 155, 71, 1);
-		padding: 5px;
+	.text{
+		padding: 10upx;
+	}
+	.card-button-cover{
+		// position: absolute;
+		// bottom: 0;
+		// margin-top: 1000upx;
+	}
+	.card-button{
+		justify-content: center;
+		align-items: center;
+		flex-direction: row;
+	}
+	.card-image{
+		width: 250upx;
+		height: 250upx;
 	}
 </style>
