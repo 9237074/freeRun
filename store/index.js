@@ -61,8 +61,8 @@ const store = new Vuex.Store({
 				customIcon: false,
 			},
 			{
-				iconPath: "https://cdn.uviewui.com/uview/common/min_button.png",
-				selectedIconPath: "https://cdn.uviewui.com/uview/common/min_button_select.png",
+				iconPath: "/static/tabbar/runHome.png",
+				selectedIconPath: "/static/tabbar/runHomeSelect.png",
 				pagePath: "/pages/run/runHome/runHome",
 				text: '跑步',
 				midButton: true,

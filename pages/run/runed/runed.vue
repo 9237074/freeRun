@@ -1,9 +1,6 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-theme" :isBack="true">
-			<block slot="backText">返回</block>
-			<block slot='content'>跑步记录</block>
-		</cu-custom>
+		<u-navbar :custom-back="customBack" back-text="返回" back-icon-color="#fff" back-text-style="background" title="运动完成" title-color="#fff" :background="background"></u-navbar>
 		<map :latitude="latitude" :longitude="longitude" style="height: 65vh;width: 750rpx;"
 		:polyline="polylines"
 		></map>
@@ -30,6 +27,10 @@
 	export default {
 		data() {
 			return {
+				background: {
+					backgroundImage: 'linear-gradient(45deg, #6d448e, #efb8dd)',
+					color: '#fff'
+				},
 				latitude:'26.00394',
 				longitude:'119.448084',
 				speed:0,
@@ -78,7 +79,12 @@
 			}
 		},
 		methods: {
-			
+			customBack(){
+				this.$u.route({
+					url: 'pages/run/runHome/runHome',
+					type: 'switchTab'
+				})
+			}
 		}
 	}
 </script>

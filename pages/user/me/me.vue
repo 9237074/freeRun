@@ -3,8 +3,8 @@
 		<view class="userInfo" :style="{'padding-top': paddingTop + 'px'}">
 			<view class="userInfo-top">
 				<view class="avatar">
-					<u-avatar :src="src"></u-avatar>
-					<!-- <u-image :src="src" ></u-image> -->
+					<!-- <u-avatar :src="src"></u-avatar> -->
+					<u-image shape="circle" width="100upx" height="100upx" :src="src" ></u-image>
 				</view>
 				<view class="userName">
 					<view>
@@ -226,14 +226,13 @@
 
 		.userInfo-bottom {
 			margin-top: 20upx;
-			height: 160upx;
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
 	}
 
 	.menu {
-		margin-bottom: 20upx;
+		margin-bottom: 40upx;
 	}
 
 	.card {

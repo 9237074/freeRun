@@ -31,14 +31,20 @@
 				"navigationBarTitleText": "首页",
 				"navigationBarBackgroundColor": "#FFFFFF",
 				"backgroundColor": "#FFFFFF",
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": true,
+				"app-plus": { //app平台
+					"bounce": "none" //禁止滚动
+				}
 			}
 		}, {
 			"path": "pages/user/me/me",
 			"style": {
 				"navigationBarTitleText": "个人首页",
 				"navigationBarBackgroundColor": "#FFFFFF",
-				"backgroundColor": "#FFFFFF"
+				"backgroundColor": "#FFFFFF",
+				"app-plus": { //app平台
+					"bounce": "none" //禁止滚动
+				}
 			}
 		}, {
 			"path": "pages/system/debug/debug",
@@ -48,31 +54,50 @@
 			"style": {
 				"navigationBarTitleText": "晨读首页",
 				"navigationBarBackgroundColor": "#FFFFFF",
-				"backgroundColor": "#FFFFFF"
+				"backgroundColor": "#FFFFFF",
+				"app-plus": { //app平台
+					"bounce": "none" //禁止滚动
+				}
 			}
 		}, {
 			"path": "pages/run/runHome/runHome",
 			"style": {
 				"navigationBarTitleText": "跑步首页",
 				"navigationBarBackgroundColor": "#FFFFFF",
-				"backgroundColor": "#FFFFFF"
+				"backgroundColor": "#FFFFFF",
+				"app-plus": { //app平台
+					"bounce": "none" //禁止滚动
+				}
 			}
 		}, {
 			"path": "pages/run/running/running",
 			"style": {
 				"navigationBarTitleText": "运动中",
 				"navigationBarBackgroundColor": "#FFFFFF",
-				"backgroundColor": "#FFFFFF"
-				// "app-plus": { //app平台
-				// 	"bounce": "none" //禁止滚动
-				// }
+				"backgroundColor": "#FFFFFF",
+				"app-plus": { //app平台
+					"bounce": "none" //禁止滚动
+				}
+			}
+		},{
+			"path": "pages/run/runed/runed",
+			"style": {
+				"navigationBarTitleText": "运动完成",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"backgroundColor": "#FFFFFF",
+				"app-plus": { //app平台
+					"bounce": "none" //禁止滚动
+				}
 			}
 		}, {
 			"path": "pages/user/rankHome/rankHome",
 			"style": {
 				"navigationBarTitleText": "排行榜首页",
 				"navigationBarBackgroundColor": "#FFFFFF",
-				"backgroundColor": "#FFFFFF"
+				"backgroundColor": "#FFFFFF",
+				"app-plus": { //app平台
+					"bounce": "none" //禁止滚动
+				}
 			}
 		}
 		// {
