@@ -2,9 +2,10 @@ const install = (Vue, vm) => {
 	// 此为自定义配置参数，具体参数见上方说明
 	Vue.prototype.$u.http.setConfig({
 		// baseUrl: 'http://localhost:4000',
-		baseUrl: 'http://192.168.2.108:4000',
+		baseUrl: 'http://192.168.2.115:4000',
 		loadingText: '努力加载中~',
 		loadingTime: 800,
+		originalData: false,
 		// 设置自定义头部content-type
 		header: {
 			// 'authorization': vm.$u
@@ -14,8 +15,8 @@ const install = (Vue, vm) => {
 	// 请求拦截部分，如配置，每次请求前都会执行，见上方说明
 	Vue.prototype.$u.http.interceptor.request = (config) => {
 		// ......
+		console.log("vm_token",vm.vuex_userInfo.token)
 		config.header.authorization = vm.vuex_userInfo.token || '';
-		// console.log(vm.vuex_userInfo.token)
 		if(config.url == '/moble/system/sign') config.header.noToken = true;
 		if(config.url == '/moble/system/login') config.header.noToken = true;
 		if(config.url == '/moble/system/forgetPassword') config.header.noToken = true;
@@ -23,9 +24,7 @@ const install = (Vue, vm) => {
 	};
 	// 响应拦截，如配置，每次请求结束都会执行本方法
 	Vue.prototype.$u.http.interceptor.response = (res) => {
-		console.log(res)
 		const code = res.code || res.errorCode
-		// console.log({code})
 		switch(code){
 			case 200:
 				return res.data

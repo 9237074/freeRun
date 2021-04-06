@@ -3,6 +3,7 @@
 		<!-- 导航栏 -->
 		<searchNav @search="searchTheme"></searchNav>
 		<!-- 列表渲染阅读主题 -->
+		<u-empty :show="!readThemes.length" text="暂时没有阅读主题" mode="list" margin-top="200"></u-empty>
 		<view class="card" v-for="(item,index) in readThemes" :key="index">
 			<view class="card-header">
 				<view class="mark">

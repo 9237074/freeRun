@@ -2,18 +2,17 @@
 	<view class="page">
 		<map class="map" :style="{'width': phoneWidth+'px','height': phoneHeight + 48 + 'px'}"
 			:latitude="markers[0].latitude" :longitude="markers[0].longitude" :markers="markers" :scale="17"
-			:show-location="true">
+			:show-location="true" :polyline="polyline">
 		</map>
 		<cover-view class="">
 			<!-- 当前打卡数:{{signCount}}|{{markers[0].latitude}} -{{markers[0].longitude}} -->
 			<view class="card-cover-view">
 				<view class="card-item card-time">
-					<text
-						class="text">{{parseInt(time/3600)<10?0:''}}{{parseInt(time/3600)}}:{{parseInt(time%3600/60)<10?0:''}}{{parseInt(time%3600/60)}}:{{parseInt(time%3600%60)<10?0:''}}{{parseInt(time%3600%60)}}</text>
-					<text class="text">时常</text>
+					<text class="text">{{distance}} km</text>
+					<text class="text">里程</text>
 				</view>
 				<view class="card-item card-distance">
-					<text class="text">{{(distance*0.06).toFixed(2)}}</text>
+					<text class="text">{{(distance*0.06).toFixed(2)}} kcal</text>
 					<text class="text">卡路里</text>
 				</view>
 				<view class="card-item card-speed">
@@ -21,8 +20,15 @@
 					<text class="text">速度</text>
 				</view>
 			</view>
+			<view class="card-cover-time">
+				<view class="card-item card-time">
+					<text
+						class="text">{{parseInt(time/3600)<10?0:''}}{{parseInt(time/3600)}}:{{parseInt(time%3600/60)<10?0:''}}{{parseInt(time%3600/60)}}:{{parseInt(time%3600%60)<10?0:''}}{{parseInt(time%3600%60)}}</text>
+					<text class="text">时常</text>
+				</view>
+			</view>
 		</cover-view>
-		<cover-view class="card-button-cover" :style="{'margin-top': phoneHeight*0.6 + 'px'}">
+		<cover-view class="card-button-cover" :style="{'margin-top': phoneHeight*0.5 + 'px'}">
 			<view class="card-button">
 				<image class="card-image" v-if="active" src="@/static/images/running/suspend.png"
 					@longpress="stoplocation"></image>
@@ -34,20 +40,18 @@
 </template>
 
 <script>
-	// import GpsTool from '@/util/gpsTools.js'
-	// const music = require('@/static/aduio/01.mp3')
+	import GpsTool from '@/util/gpsTools.js'
 	export default {
 		data() {
 			return {
 				phoneHeight: '',
 				phoneWidth: '',
-				// gps日志
-				// 过滤后
 				gps: [],
 				// 临时变量gps
-				tempGps: {
+				tempData: {
 					latitude: '',
-					longitude: ''
+					longitude: '',
+					timestamp: ''
 				},
 				// 地图覆盖物 id为1对象是当前位置
 				markers: [{
@@ -55,12 +59,19 @@
 					latitude: 26.002194,
 					longitude: 119.448814, //,
 					iconPath: '@/static/locall.png',
-					width: 10,
-					height: 10
+					width: 50,
+					height: 50
+				}],
+				// 
+				polyline: [{
+					points: [],
+					arrowLine: true,
+					color: "#0AAC61",
+					borderColor: "#0AAC61",
+					width: 10
 				}],
 				// 打卡点
 				point: [
-					['田径场南', 119.448814, 26.002194],
 					['南天门', 119.447129, 26.001869],
 					['商学楼门口', 119.446553, 26.002759],
 					['图书馆门口', 119.447137, 26.003403],
@@ -69,17 +80,10 @@
 					['工程结构试验中心门口', 119.449395, 26.005712],
 					['东10前空地', 119.450339, 26.004317],
 					['五期工程楼梯道路旁', 119.451315, 26.003781],
-					['东12宿舍楼道路旁', 119.452183, 26.003010],
 					['校车处', 119.450409, 26.003310],
 					['田径场北', 119.4495980000, 26.0031870000],
 				],
-				// 轨迹图
-				polyline: [{
-					points: [],
-					arrowLine: true,
-					color: "#0AAC61",
-					borderColor: "#0AAC61"
-				}],
+
 				// 里程 单位m
 				distance: 0,
 				speed: 0,
@@ -89,14 +93,48 @@
 				active: 1,
 				time: 0,
 				timeSetInterval: null,
-				timeSetIntervalGps: null
+				timeSetIntervalGps: null,
+				option: {
+					enableHighAccuracy: true,
+					maximumAge: 1000,
+					provider: "amap",
+					coordsType: "gcj02",
+					geocode: "false"
+				},
+				isShow: false
+			}
+		},
+		computed: {
+			// 轨迹图
+			polylines() {
+				return [...this.polyline]
 			}
 		},
 		onLoad() {
+			plus.navigator.closeSplashscreen();
 			// this.initPoint()
 			this.timeSetInterval = setInterval(() => {
 				this.time = this.time + 1
 			}, 1000)
+			// this.timeSetIntervalGps
+			const platform = uni.getSystemInfoSync().platform
+			// 让用户授权
+			uni.getLocation({
+				success: (e) => {
+
+				},
+				fail: (e) => {
+					console.log(e)
+					this.isShow = true
+				}
+			})
+			console.log(`当前运行平台:${platform}`)
+			if (platform === 'ios') {
+				this.getLocation()
+			}
+			if (platform === 'android') {
+				const fUN_AmapLocation = uni.requireNativePlugin('FUN-AmapLocation');
+			}
 		},
 		onBackPress(e) {
 			// return true 表示禁止默认返回
@@ -108,9 +146,9 @@
 				success: res => {
 					this.phoneHeight = res.windowHeight;
 					this.phoneWidth = res.windowWidth;
-					console.log(res)
 				}
 			});
+
 		},
 		methods: {
 			// 初始化打卡点
@@ -138,82 +176,87 @@
 				}, 1000)
 			},
 			getLocation() {
-				this.timeSetIntervalGps = setInterval(async () => {
-					// let gpsInfo = await this.getLocationSync()
-					// this.handleLocation(gpsInfo)
-
-				}, 1000)
+				console.log('开始获取ios定位信息')
+				plus.geolocation.watchPosition(this.handleLocation, this.handleLocationError, this.option);
 			},
 			// 处理定位信息
 			handleLocation(e) {
-				let curTime = parseInt(new Date().getTime() / 1000)
-				// 真实的gps信息
-				let realGps = {
-					latitude: e.latitude,
-					longitude: e.longitude,
-					timestamp: curTime
-				}
-
-				// 合并this.markers
-				this.markers[0] = Object.assign(this.markers[0], realGps)
-				if (!this.tempGps.latitude || !this.tempGps.longitude) {
-					this.tempGps = JSON.parse(JSON.stringify(realGps))
-					return
-				}
-				// 判断当前gps跟上一个gps是否一样
-				if (this.tempGps.latitude === realGps.latitude && this.tempGps.longitude === realGps.longitude) {
-					// console.log('updateTime:', this.tempGps.timestamp, realGps.timestamp, realGps.timestamp - this.tempGps.timestamp)
-					this.tempGps.timestamp = realGps.timestamp
-					return
-				}
-				console.log('不相等。')
-				let gpsTool = new GpsTool()
-				let tempDistance = gpsTool.distance(this.tempGps.latitude, this.tempGps.longitude, realGps.latitude,
-					realGps.longitude)
-				let tempSpeed = tempDistance / parseInt(realGps.timestamp - this.tempGps.timestamp)
 				try {
-					let logStorage = uni.getStorageSync('logStorage') || []
-					logStorage.push({
-						timestamp: curTime,
-						latitude: realGps.latitude,
-						longitude: realGps.longitude,
-						distance: tempDistance
+					// console.log(e)
+					const {
+						latitude,
+						longitude
+					} = e.coords
+					this.markers[0].latitude = latitude
+					this.markers[0].longitude = longitude
+					// 判断临时gps信息是否存在
+					if (this.tempData.latitude === '' || this.tempData.longitude === '') {
+						console.log("第一次更新gps信息，信息为：", this.tempData)
+						this.tempData.latitude = latitude
+						this.tempData.longitude = longitude
+						this.tempData.timestamp = e.timestamp
+						return
+					}
+					// 判断当前gps跟上一个gps是否一样
+					if (this.tempData.latitude === latitude && this.tempData.longitude === longitude) return
+
+					// 计算里程 速度
+					const gpsTool = new GpsTool()
+					const tempDistance = gpsTool.distance(this.tempData.latitude, this.tempData.longitude, latitude,
+						longitude)
+					const tempSpeed = tempDistance / ((e.timestamp - this.tempData.timestamp) / 1000)
+					// 设置数据缓存
+					try {
+						let logStorage = uni.getStorageSync('logStorage') || []
+						logStorage.push({
+							timestamp: e.timestamp,
+							latitude: latitude,
+							longitude: longitude,
+							distance: this.distance
+						})
+						uni.setStorageSync('logStorage', logStorage)
+					} catch (e) {
+						// error
+						console.log('获取出错了:', e)
+					}
+					// 更新数据
+					this.tempData.latitude = latitude
+					this.tempData.longitude = longitude
+					this.tempData.timestamp = e.timestamp
+					if (tempSpeed <= 6.25) {
+						this.distance = Number(this.distance) + Number(tempDistance / 1000)
+						this.distance = this.distance.toFixed(2)
+					}
+					this.speed = tempSpeed.toFixed(2)
+					this.polyline[0].points.push({
+						latitude: latitude,
+						longitude: longitude
 					})
-					uni.setStorageSync('logStorage', logStorage)
+					this.polyline = [...this.polyline]
+					console.log(`一次gps信息数据更新完成 里程:${this.distance} 速度:${this.speed} `)
 				} catch (e) {
-					// error
-					console.log('获取出错了:', e)
+					console.log(e)
 				}
-				console.log()
-				console.log(this.tempGps, realGps, '距离:', tempDistance, '时间:', parseInt(realGps.timestamp - this.tempGps
-					.timestamp), '速度:', tempDistance / parseInt(realGps.timestamp - this.tempGps.timestamp))
-				if (tempSpeed > 6.25) return
-				this.tempGps = JSON.parse(JSON.stringify(realGps))
-				this.distance += tempDistance
-				this.speed = tempSpeed.toFixed(2)
-				this.polyline[0].points.push({
-					latitude: realGps.latitude,
-					longitude: realGps.longitude
-				})
-				gpsTool = null
-				if (this.isSign(realGps)) this.signCount++
+			},
+			handleLocationError(e) {
+				console.log(e)
 			},
 			// 停止获取定位
 			stoplocation() {
 				clearInterval(this.timeSetInterval);
-				clearInterval(this.timeSetIntervalGps)
 				this.active = false;
 			},
 			// 提交
 			over() {
-				console.log('eee')
-				// this.$u.route({
-				// 	url: 'pages/run/runed/runed',
-				// 	type: 'redirect'
-				// })
 				uni.redirectTo({
-					url: "/pages/run/runed/runed"
+					url: `/pages/run/runed/runed?data=${JSON.stringify({
+						distance: this.distance,
+						speed: this.speed,
+						time: this.time,
+						polyline: this.polyline
+					})}`
 				})
+				// uni.setStorageSync('logStorage', null)
 			},
 			// 检查时间 大于600秒 小于7200秒
 			checkTime() {
@@ -325,9 +368,19 @@
 
 	.card-cover-view {
 		background-color: #FFFFFF;
-		padding: 20upx;
-		margin: 48px 20upx 20upx 20upx;
-		border-radius: 20upx;
+		padding: 10upx;
+		margin: 48px 20upx 0 20upx;
+		border-radius: 20upx 20upx 0 0;
+		flex-direction: row;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+	.card-cover-time {
+		background-color: #FFFFFF;
+		padding: 10upx;
+		margin: 0 20upx 20upx 20upx;
+		border-radius: 0 0 20upx 20upx;
 		flex-direction: row;
 		justify-content: center;
 	}

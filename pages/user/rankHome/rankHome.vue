@@ -1,14 +1,12 @@
 <template>
-	<view  class="page">
+	<view>
 
 		<u-tabs class="tabs" :style="{'padding-top': paddingTop + 'px'}" bg-color="#a865cc" active-color="#623684" inactive-color="#ffffff" :list="list" :is-scroll="false"
 			:current="swiperIndex" @change="changeType"></u-tabs>
-		<view class="">
-			
-		</view>
 		<swiper :current="swiperIndex" @change="changeType" :duration="0" class="swiper">
-			<swiper-item>
-				<view v-for="(item,index) in rundata" :key='item.uid + index' class="swiper-item">
+			<swiper-item class="swiper-item">
+				<u-empty :show="!rundata.length" text="暂时没有运动排行记录" mode="list" margin-top="150" font-size="15"></u-empty>
+				<view v-for="(item,index) in rundata" :key='item.uid + index' class="swiper-item-view">
 					<u-row gutter="10" justify="between">
 						<u-col span="3" text-align="center">
 							<u-image width="100upx" height="100upx" src="@/static/logo.png" shape="circle"></u-image>
@@ -34,8 +32,9 @@
 					</u-row>
 				</view>
 			</swiper-item>
-			<swiper-item>
-				<view v-for="(item,index) in readdata" :key='item.uid' class="swiper-item">
+			<swiper-item  class="swiper-item">
+				<u-empty :show="!readdata.length" text="暂时没有阅读排行记录" mode="list" margin-top="150" font-size="15"></u-empty>
+				<view v-for="(item,index) in readdata" :key='item.uid' class="swiper-item-view">
 					<u-row gutter="10" justify="between">
 						<u-col span="3">
 							<u-image width="100upx" height="100upx" src="@/static/logo.png" shape="circle"></u-image>
@@ -131,22 +130,22 @@
 		top: 0;
 		z-index: 9;
 	}
-
+	
 	.swiper {
-		// height: 100vh;
 		margin-top: 190upx;
-		.swiper-item {
-			background-color: #f5ecff;
-			color: #6d448e;
-			margin: 10upx;
-			padding: 20upx;
-			border-radius: 10upx;
-			box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.12);
-
-			.u-col {
-				display: flex;
-				justify-content: center;
-				flex-direction: column;
+		.swiper-item{
+			.swiper-item-view {
+				background-color: #f5ecff;
+				color: #6d448e;
+				margin: 10upx;
+				padding: 20upx;
+				border-radius: 10upx;
+				box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.12);
+				.u-col {
+					display: flex;
+					justify-content: center;
+					flex-direction: column;
+				}
 			}
 		}
 	}

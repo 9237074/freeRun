@@ -1,10 +1,11 @@
 <template>
 	<view>
+		<u-modal v-model="isShowLogout" :content="logoutContent" :show-cancel-button="true" @confirm="logout"></u-modal>
 		<view class="userInfo" :style="{'padding-top': paddingTop + 'px'}">
 			<view class="userInfo-top">
 				<view class="avatar">
 					<!-- <u-avatar :src="src"></u-avatar> -->
-					<u-image shape="circle" width="100upx" height="100upx" :src="src" ></u-image>
+					<u-image shape="circle" width="100upx" height="100upx" :src="src"></u-image>
 				</view>
 				<view class="userName">
 					<view>
@@ -15,7 +16,7 @@
 					</view>
 				</view>
 				<view class="setting">
-					<u-icon name="setting" size="36"></u-icon>
+					<u-icon name="setting" size="36" @click="isShowLogout = true"></u-icon>
 				</view>
 			</view>
 			<view class="userInfo-bottom">
@@ -124,7 +125,9 @@
 					mileage: 0,
 					duration: 0,
 					fraction: 0
-				}
+				},
+				isShowLogout: false,
+				logoutContent: '确定退出登录吗？'
 			}
 		},
 		onLoad() {
@@ -138,16 +141,26 @@
 				console.log({
 					res
 				})
-				this.read = res
+				res ? this.read = res : ''
+			}).catch(e => {
+				console.log(e)
 			})
 			this.$u.api.rungrade().then(res => {
 				console.log({
 					res
 				})
-				this.run = res
+				res ? this.run = res : ''
 			})
 		},
 		methods: {
+			logout() {
+				this.$u.vuex('vuex_userInfo', null)
+				this.$u.route({
+					url: 'pages/system/login/login',
+					type: 'reLaunch'
+				})
+				this.isShowLogout = false
+			},
 			gotoDebug() {
 
 			},

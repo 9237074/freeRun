@@ -12,7 +12,7 @@ try {
 }
 
 // 需要永久存储，且下次APP启动需要取出的，在state中的变量名
-let saveStateKeys = ['vuex_user', 'vuex_token', 'vuex_userInfo'];
+let saveStateKeys = ['vuex_user', 'vuex_userInfo'];
 
 // 保存变量到本地存储中
 const saveLifeData = function(key, value) {
@@ -37,7 +37,6 @@ const store = new Vuex.Store({
 		},
 		// 用户信息
 		vuex_userInfo: lifeData.vuex_userInfo? lifeData.vuex_userInfo : {},
-		vuex_token: lifeData.vuex_token ? lifeData.vuex_token : '',
 		// 如果vuex_version无需保存到本地永久存储，无需lifeData.vuex_version方式
 		vuex_version: '0.0.1',
 		themeColorObj: {
