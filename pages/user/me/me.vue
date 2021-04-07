@@ -49,7 +49,7 @@
 			<u-line color="#84599c" />
 			<view class="card-body">
 				<view class="progress">
-					<u-circle-progress active-color="#84599c" :percent="run.fraction/100">
+					<u-circle-progress active-color="#84599c" :percent="run.fraction">
 						<view class="u-progress-content">
 							<view class="u-progress-dot"></view>
 							<view class='u-progress-info'>
@@ -80,7 +80,7 @@
 			<u-line color="#84599c" />
 			<view class="card-body">
 				<view class="progress">
-					<u-circle-progress active-color="#84599c" :percent="read.fraction/100">
+					<u-circle-progress active-color="#84599c" :percent="read.fraction">
 						<view class="u-progress-content">
 							<view class="u-progress-dot"></view>
 							<view class='u-progress-info'>

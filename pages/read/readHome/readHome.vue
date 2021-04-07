@@ -51,15 +51,13 @@
 				currentIndex: 0
 			}
 		},
-		onLoad() {
+		onShow() {
 			this.getReadTheme()
 		},
 		methods: {
 			getReadTheme() {
 				this.$u.api.readpage().then(res => {
-					console.log(JSON.stringify(res.data))
-					this.readThemes.push(...res.data)
-					console.log(this.readThemes)
+					this.readThemes= res.data
 				})
 			},
 			searchTheme(e) {
