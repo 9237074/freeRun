@@ -1,11 +1,11 @@
 //wx0d924d10e89a476b
 <script>
-	import Vue from 'vue'
-	import store from '@/store'
-	import permision from 'js_sdk/wa-permission/permission.js'
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
+			if (process.env.NODE_ENV === 'development') {
+				plus.navigator.closeSplashscreen();
+			}
 		},
 		onShow: function() {
 			console.log('App Show')

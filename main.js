@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import uView from "uview-ui";
 import App from './App'
-import cuCustom from './colorui/components/cu-custom.vue'
 
 const crypto = require('crypto');
 
@@ -11,7 +10,6 @@ Vue.use(uView);
 import store from '@/store'
 import config from '@/config'
 
-Vue.component('cu-custom', cuCustom)
 
 Vue.config.productionTip = false
 

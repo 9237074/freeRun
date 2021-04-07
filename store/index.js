@@ -35,6 +35,7 @@ const store = new Vuex.Store({
 		vuex_user: lifeData.vuex_user ? lifeData.vuex_user : {
 			name: '明月'
 		},
+		that: null,
 		// 用户信息
 		vuex_userInfo: lifeData.vuex_userInfo? lifeData.vuex_userInfo : {},
 		// 如果vuex_version无需保存到本地永久存储，无需lifeData.vuex_version方式

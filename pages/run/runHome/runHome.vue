@@ -6,11 +6,11 @@
 			</view>
 			<view class="progress">
 				<u-circle-progress width="500" border-width="30" bg-color="rgba(255,255,255,0)" inactive-color="#dfc7f8"
-					active-color="#b674ed" :percent="33">
+					active-color="#b674ed" :percent="fraction">
 				</u-circle-progress>
 				<view class="u-progress-content">
 					<view>已打卡次数</view>
-					<view>10</view>
+					<view>{{gradeData.fraction}}</view>
 					<view class="button-start"  @click="startRun">start</view>
 				</view>
 			</view>
@@ -18,20 +18,20 @@
 				<u-row gutter="12" justify-content="between">
 					<u-col span="3" text-align='center'>
 						<view class="target-item">
-							<view>5</view>
+							<view>{{gradeData.mileage}}</view>
 							<view>KM</view>
 						</view>
 					</u-col>
 					<u-col span="6" text-align='center'>
 						<view class="target-item">
-							<view>00:30:00</view>
-							<view>TIME</view>
+							<view>{{duration}}</view>
+							<view>Hours</view>
 						</view>
 					</u-col>
 					<u-col span="3" text-align='center'>
 						<view class="target-item">
-							<view>8</view>
-							<view>KA</view>
+							<view>{{cal}}</view>
+							<view>Kcal</view>
 						</view>
 					</u-col>
 				</u-row>
@@ -53,11 +53,34 @@
 			return {
 				paddingTop: 48,
 				times: 0,
-				aims: 60
+				aims: 60,
+				gradeData: {
+					runTimes: 1,
+					mileage: 0,
+					duration: 50,
+					fraction: 4,
+				}
+			}
+		},
+		computed:{
+			runTimes(){
+				return this.gradeData.runTimes
+			},
+			duration(){
+				return (this.gradeData.duration / 3600).toFixed(2)
+			},
+			fraction(){
+				return Number(this.gradeData.fraction / 100) > 100 ? Number(this.gradeData.fraction / 100) : Number(this.gradeData.fraction)
+			},
+			cal(){
+				return this.gradeData.mileage * 0.06
 			}
 		},
 		onShow() {
-
+			this.$u.api.rungrade().then(res => {
+				console.log(res)
+				this.gradeData = res
+			})
 		},
 		methods: {
 			startRun(e) {

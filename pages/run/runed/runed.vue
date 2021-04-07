@@ -3,11 +3,11 @@
 		<u-navbar :custom-back="customBack" back-text="返回" back-icon-color="#fff" :back-text-style="{color: '#fff'}"
 			title="运动完成" title-color="#fff" :background="background"></u-navbar>
 		<map :latitude="latitude" :longitude="longitude" style="height: 65vh;width: 750rpx;"
-			:polyline="postData.polyline"></map>
+			:polyline="postData.polyline" :scale="17"></map>
 		<view class="info-card">
 			<view class="card-distance">
 				<u-col text-align="center">
-					<text>{{(postData.distance/1000).toFixed(2)}}km</text>
+					<text>{{postData.distance}} km</text>
 				</u-col>
 			</view>
 			<u-row gutter="12" justify="center" class="card-body">
@@ -51,26 +51,15 @@
 					}]
 				},
 				latitude: 26.00394,
-				longitude: 119.448084,
-				// markers:[{
-				// 	"id":"1",
-				// 	"latitude":"26.00394",
-				// 	"longitude":"119.448084",
-				// 	"iconPath":"../../static/position.png"
-				// }]
+				longitude: 119.448084
 			}
 		},
 		onLoad(e) {
-			if (process.env.NODE_ENV === 'development') {
-				plus.navigator.closeSplashscreen();
-			}
 			console.log('postData', JSON.parse(e.data))
 			const postData = JSON.parse(e.data)
-			if (postData.id === undefined) {
-				this.postData = postData
-			} else {
-				//服务器数据传值
-			}
+			this.postData = postData
+			this.latitude = postData.polyline[0].points[postData.polyline[0].points.length - 1].latitude
+			this.longitude = postData.polyline[0].points[postData.polyline[0].points.length - 1].longitude
 		},
 		methods: {
 			customBack() {

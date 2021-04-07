@@ -66,8 +66,8 @@
 				polyline: [{
 					points: [],
 					arrowLine: true,
-					color: "#0AAC61",
-					borderColor: "#0AAC61",
+					color: "#efb8dd",
+					borderColor: "#efb8dd",
 					width: 10
 				}],
 				// 打卡点
@@ -101,16 +101,13 @@
 					coordsType: "gcj02",
 					geocode: "false"
 				},
-				isShow: false
-			}
-		},
-		computed: {
-			// 轨迹图
-			polylines() {
-				return [...this.polyline]
+				isShow: false,
+				$u: null,
+				stepCount: 0
 			}
 		},
 		onLoad() {
+			this.$u = this.$store.state.that.$u
 			plus.navigator.closeSplashscreen();
 			// this.initPoint()
 			this.timeSetInterval = setInterval(() => {
@@ -148,7 +145,6 @@
 					this.phoneWidth = res.windowWidth;
 				}
 			});
-
 		},
 		methods: {
 			// 初始化打卡点
@@ -248,13 +244,49 @@
 			},
 			// 提交
 			over() {
-				uni.redirectTo({
-					url: `/pages/run/runed/runed?data=${JSON.stringify({
-						distance: this.distance,
-						speed: this.speed,
-						time: this.time,
-						polyline: this.polyline
-					})}`
+				// uni.redirectTo({
+				// 	url: `/pages/run/runed/runed?data=${JSON.stringify({
+				// 		distance: this.distance,
+				// 		speed: this.speed,
+				// 		time: this.time,
+				// 		polyline: this.polyline
+				// 	})}`
+				// })
+				// this.checkTime()
+				// runTime + spendTime + mileage + stepCount + speed
+				const runTime = Date.now()
+				const str = `${runTime}${this.time}${this.distance}${this.stepCount}${this.speed}`
+				console.log({
+					str,
+					key: this.$store.state.that.checkKey(str)
+				})
+				uni.showLoading({
+					title: '上传数据中',
+					mask: true,
+					success: () => {
+						this.$u.api.runcheck({
+							runTime,
+							spendTime: this.time,
+							mileage: this.distance,
+							stepCount: this.stepCount,
+							speed: this.speed,
+							gps: this.polyline[0].points,
+							key: this.$store.state.that.checkKey(str)
+						}).then(res => {
+							// this.hideLoading()
+							console.log(res)
+							uni.redirectTo({
+								url: `/pages/run/runed/runed?data=${JSON.stringify({
+									distance: this.distance,
+									speed: this.speed,
+									time: this.time,
+									polyline: this.polyline
+								})}`
+							})
+						}).catch(e => {
+							console.log(e)
+						})
+					}
 				})
 				// uni.setStorageSync('logStorage', null)
 			},

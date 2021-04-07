@@ -5,7 +5,7 @@
 			:current="swiperIndex" @change="changeType"></u-tabs>
 		<swiper :current="swiperIndex" @change="changeType" :duration="0" class="swiper">
 			<swiper-item class="swiper-item">
-				<u-empty :show="!rundata.length" text="暂时没有运动排行记录" mode="list" margin-top="150" font-size="15"></u-empty>
+				<u-empty :show="!rundata.length" text="暂时没有运动排行记录" mode="list" margin-top="150" font-size="28"></u-empty>
 				<view v-for="(item,index) in rundata" :key='item.uid + index' class="swiper-item-view">
 					<u-row gutter="10" justify="between">
 						<u-col span="3" text-align="center">
@@ -33,7 +33,7 @@
 				</view>
 			</swiper-item>
 			<swiper-item  class="swiper-item">
-				<u-empty :show="!readdata.length" text="暂时没有阅读排行记录" mode="list" margin-top="150" font-size="15"></u-empty>
+				<u-empty :show="!readdata.length" text="暂时没有阅读排行记录" mode="list" margin-top="150" font-size="28"></u-empty>
 				<view v-for="(item,index) in readdata" :key='item.uid' class="swiper-item-view">
 					<u-row gutter="10" justify="between">
 						<u-col span="3">
@@ -87,7 +87,7 @@
 			})
 			this.$u.api.runrank().then(res => {
 				console.log(res)
-				this.rundata.push(...res.data, ...res.data, ...res.data, ...res.data)
+				this.rundata.push(...res.data)
 			})
 		},
 		methods: {
@@ -133,6 +133,7 @@
 	
 	.swiper {
 		margin-top: 190upx;
+		height: 75vh;
 		.swiper-item{
 			.swiper-item-view {
 				background-color: #f5ecff;
