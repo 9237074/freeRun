@@ -1,6 +1,5 @@
 <template>
 	<view>
-
 		<u-tabs class="tabs" :style="{'padding-top': paddingTop + 'px'}" bg-color="#a865cc" active-color="#623684" inactive-color="#ffffff" :list="list" :is-scroll="false"
 			:current="swiperIndex" @change="changeType"></u-tabs>
 		<swiper :current="swiperIndex" @change="changeType" :duration="0" class="swiper">
@@ -80,14 +79,16 @@
 				readdata: []
 			}
 		},
-		onLoad() {
+		onShow() {
 			this.$u.api.readrank().then(res => {
 				console.log(res)
-				this.readdata.push(...res.data)
+				this.readdata = res.data
+			}).catch(e => {
+				console.log(e)
 			})
 			this.$u.api.runrank().then(res => {
 				console.log(res)
-				this.rundata.push(...res.data)
+				this.rundata = res.data
 			})
 		},
 		methods: {

@@ -102,12 +102,11 @@
 					geocode: "false"
 				},
 				isShow: false,
-				$u: null,
+				$u: {},
 				stepCount: 0
 			}
 		},
 		onLoad() {
-			this.$u = this.$store.state.that.$u
 			plus.navigator.closeSplashscreen();
 			// this.initPoint()
 			this.timeSetInterval = setInterval(() => {
@@ -254,6 +253,7 @@
 				// })
 				// this.checkTime()
 				// runTime + spendTime + mileage + stepCount + speed
+				this.$u = this.$store.state.that.$u
 				const runTime = Date.now()
 				const str = `${runTime}${this.time}${this.distance}${this.stepCount}${this.speed}`
 				console.log({

@@ -1,6 +1,18 @@
 <template>
 	<view>
 		<u-modal v-model="isShowLogout" :content="logoutContent" :show-cancel-button="true" @confirm="logout"></u-modal>
+		<u-popup v-model="showInfo" mode="bottom" border-radius="14" height="50%">
+			<view class="info-card-title">个人资料</view>
+			<view class="info-card">
+				<view class="info-card-item">昵称：{{vuex_userInfo.user}}</view>
+				<view class="info-card-item">账号：{{vuex_userInfo.studentId}}</view>
+				<view class="info-card-item">姓名：{{vuex_userInfo.name}}</view>
+				<view class="info-card-item">学院：{{vuex_userInfo.department}}</view>
+				<view class="info-card-item">专业：{{vuex_userInfo.profession}}</view>
+				<view class="info-card-item">年级：{{vuex_userInfo.grade}}</view>
+				<view class="info-card-item">积分：{{vuex_userInfo.fraction}}</view>
+			</view>
+		</u-popup>
 		<view class="userInfo" :style="{'padding-top': paddingTop + 'px'}">
 			<view class="userInfo-top">
 				<view class="avatar">
@@ -30,17 +42,19 @@
 		</view>
 		<view class="menu">
 			<u-row gutter="12" justify="center">
-				<u-col span="4" text-align='center'>
+				<u-col span="4" text-align='center' @click="myrank">
 					<u-icon name="hourglass"></u-icon>
 					我的排行
 				</u-col>
-				<u-col span="4" text-align='center'>
+				<u-col span="4" text-align='center' @click="showInfo = true">
 					<u-icon name="hourglass"></u-icon>
 					个人资料
 				</u-col>
 				<u-col span="4" text-align='center'>
-					<u-icon name="hourglass"></u-icon>
-					签到码
+					<view @click="checkQr">
+						<u-icon name="hourglass"></u-icon>
+						签到码
+					</view>
 				</u-col>
 			</u-row>
 		</view>
@@ -104,7 +118,7 @@
 		</view>
 		<!-- 我的排行 跑步记录 晨读记录 个人资料 签到码 关于我们 -->
 		<!-- 与包裹页面所有内容的元素u-page同级，且在它的下方 -->
-		<u-tabbar v-model="current" :list='tabbar' :mid-button="true"></u-tabbar>
+		<u-tabbar :list='tabbar' :mid-button="true"></u-tabbar>
 
 	</view>
 </template>
@@ -127,10 +141,11 @@
 					fraction: 0
 				},
 				isShowLogout: false,
-				logoutContent: '确定退出登录吗？'
+				logoutContent: '确定退出登录吗？',
+				showInfo: false
 			}
 		},
-		onLoad() {
+		onShow() {
 			const platform = uni.getSystemInfoSync().platform
 			if (platform === 'ios') {
 				this.paddingTop = 44
@@ -161,11 +176,15 @@
 				})
 				this.isShowLogout = false
 			},
-			gotoDebug() {
-
+			myrank() {
+				this.$u.route({
+					url: 'pages/user/rankHome/rankHome',
+					type: 'tab'
+				})
 			},
-			rank() {
-				this.$u.route('pages/user/rankHome/rankHome')
+			checkQr(e) {
+				console.log('e')
+				this.$u.route("/pages/user/checkQrCode/checkQrCode")
 			},
 			runRecord(e) {
 				uni.navigateTo({
@@ -176,38 +195,30 @@
 				uni.navigateTo({
 					url: '../readRecord/readRecord'
 				})
-			},
-			qrcode(e) {
-				var that = this
-				// 设备登陆检查
-				uni.request({
-					url: that.globalData.server + '/qrcode',
-					data: {
-						token: that.globalData.token
-					},
-					method: 'POST',
-					success(res) {
-						console.log(res.data.data)
-						if (res.data.data == '没有权限') {
-							uni.showToast({
-								title: '您不是负责人',
-								duration: 2000
-							})
-						} else {
-							that.src = res.data.data
-							that.modalName = e.currentTarget.dataset.target
-							// uni.navigateTo({
-							// 	url:'../qr2/qr2'+'?url='+res.data.data
-							// })
-						}
-					}
-				})
 			}
 		}
 	}
 </script>
 
 <style scoped lang="scss">
+	.info-card-title{
+		margin: 20upx;
+		text-align: center;
+		font-size: 30upx;
+		font-weight: bold;
+	}
+	.info-card{
+		margin: 20upx;
+		padding: 10upx;
+		border-radius: 25upx;
+		background-color: #ffffff;
+		box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.12);
+		.info-card-item{
+			margin: 20upx;
+			padding: 10upx;
+			border-bottom: 2upx solid #84599c;
+		}
+	}
 	.userInfo {
 		// background-image: linear-gradient(45deg, #6d448e, #efb8dd);
 		// background-image: url('@/static/images/meBg.png');

@@ -46,6 +46,16 @@
 					"bounce": "none" //禁止滚动
 				}
 			}
+		},{
+			"path": "pages/user/checkQrCode/checkQrCode",
+			"style": {
+				"navigationBarTitleText": "签到码",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"backgroundColor": "#efb8dd",
+				"app-plus": { //app平台
+					"bounce": "none" //禁止滚动
+				}
+			}
 		}, {
 			"path": "pages/system/debug/debug",
 			"style": {}

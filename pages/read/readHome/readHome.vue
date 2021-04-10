@@ -2,6 +2,8 @@
 	<view>
 		<!-- 导航栏 -->
 		<searchNav @search="searchTheme"></searchNav>
+		<!-- 模态框 -->
+		<u-modal v-model="checkModel.show" :content="checkModel.content"></u-modal>
 		<!-- 列表渲染阅读主题 -->
 		<u-empty :show="!readThemes.length" text="暂时没有阅读主题" mode="list" margin-top="200"></u-empty>
 		<view class="card" v-for="(item,index) in readThemes" :key="index">
@@ -12,7 +14,7 @@
 				<view class="theme">
 					{{item.theme}}
 				</view>
-				<view class="button" @click="checkScan">
+				<view class="button" :data-readid="item.readId" @click="checkScan">
 					<u-icon name="scan" margin-left="50" margin-right="10"></u-icon>
 					<view>签到</view>
 				</view>
@@ -48,7 +50,12 @@
 				msg: [],
 				checkout: false,
 				readThemes: [],
-				currentIndex: 0
+				tempReadThemes: [],
+				currentIndex: 0,
+				checkModel: {
+					show: false,
+					content: ''
+				}
 			}
 		},
 		onShow() {
@@ -57,13 +64,19 @@
 		methods: {
 			getReadTheme() {
 				this.$u.api.readpage().then(res => {
+					console.log(res)
 					this.readThemes= res.data
 				})
 			},
 			searchTheme(e) {
 				console.log('e:', e)
+				if(e === ''){
+					this.getReadTheme()
+					return
+				}
+				this.readThemes = this.readThemes.filter(item => item.theme === e)
 			},
-			checkScan() {
+			checkScan(e) {
 				//开始修改
 				// 第一步:获取签到开始时间,结束时间
 				//第二步:获取签到日期
@@ -71,112 +84,45 @@
 				//第四步:判断签到日期
 				uni.scanCode({
 					onlyFromCamera: true,
+					scanType: ['qrCode'],
 					success:(res)=>{
 						console.log("res:", res)
+						const result = JSON.parse(res.result)
+						this.handleCheck(result, e.currentTarget.dataset.readid)
 					},
 					fail: (err) => {
 						console.log("err:", err)
 					}
 				})
 			},
-			btn1: function(e) {
-				let that = this;
-				let index = e.target.id.split(',')[2]
-				console.log("id:", e.target.id);
-				var readTime = e.target.id.split(',')[0]
-				var readDate = e.target.id.split(',')[1]
-				var startTime = readTime.split('-')[0].split(":")
-				var endTime = readTime.split('-')[1].split(":")
-				console.log("startTime", startTime, "endTime", endTime);
-				var D = new Date()
-
-				// 设备登陆检查
-				// that.checkToken();
-				console.log(startTime[0], endTime[1].substring(0, 2), D.getHours(), D.getMinutes());
-				if ((endTime[0] == D.getHours() && endTime[1] <= D.getMinutes()) && D.getMinutes() <= Number(endTime[
-						1]) + 5) {
-					console.log('签退时间');
-					uni.scanCode({
-						onlyFromCamera: true,
-						success(res) {
-							console.log("qr:", res.result);
-							let a = JSON.parse(res.result);
-							console.log("a:", a);
-							let
-								theme = a.theme,
-								time = a.readTime,
-								date = a.readDate,
-								site = a.readSite,
-								status = '签退',
-								people = a.people;
-							if (theme != '' || time != '' || date != '' || site != '' || people != '') {
-								let key = that.checkKey(time + date + site + theme + people + that.globalData
-									.token)
-								console.log('key:', key)
-								uni.request({
-									url: that.globalData.server + '/readcheck',
-									data: {
-										token: that.globalData.token,
-										theme: theme,
-										time: time,
-										date: date,
-										site: site,
-										people: people,
-										key: key,
-										status: status
-									},
-									success(res) {
-										console.log("res...", res)
-										if (res.data.msg == "签到成功") {
-											uni.showToast({
-												title: "签退成功",
-												duration: 1500
-											})
-											that.msg[index].check = false
-											uni.setStorage({
-												key: 'readTheme',
-												data: null,
-												fail() {
-													uni.showToast({
-														title: '清空缓存失败',
-														duration: 1000
-													})
-												}
-											})
-										} else {
-											console.log(res.data.msg);
-											that.msg[index].check = false
-											uni.showToast({
-												title: '重复签退',
-												icon: 'none',
-												duration: 2000
-											})
-										}
-									}
-								})
-							}
-						}
-					})
-				} else {
-					that.msg[index].check = false
-					console.log('签退时间');
-					uni.showToast({
-						title: "签退超时",
-						duration: 1000,
-						icon: 'loading'
-					});
-					uni.setStorage({
-						key: 'readTheme',
-						data: null,
-						fail() {
-							uni.showToast({
-								title: '清空缓存失败',
-								duration: 1000
-							})
-						}
-					})
+			handleCheck(result, readId) {
+				if(result.readId !== readId){
+					this.checkModel = {
+						show: true,
+						content: "签到码与当前主题不符合"
+					}
+					return
 				}
-
+				const str = `${result.readTime} + ${result.readSite} + ${result.theme} + ${result.people} + ${result.readDate}`
+				const key = this.checkKey(str)
+				this.$u.api.readcheck({
+					readTime: result.readTime ,
+					readSite: result.readSite ,
+					theme: result.theme ,
+					peopleId: result.people ,
+					readDate: result.readDate ,
+					key: key,
+				}).then(res => {
+					this.checkModel = {
+						show: true,
+						content: "签到成功"
+					}
+				}).catch(e => {
+					this.checkModel = {
+						show: true,
+						content: e.msg
+					}
+				})
 			}
 		}
 	}

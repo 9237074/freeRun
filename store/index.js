@@ -49,8 +49,8 @@ const store = new Vuex.Store({
 				selectedIconPath: "home-fill",
 				pagePath: "/pages/system/index/index",
 				text: '首页',
-				count: 2,
-				isDot: true,
+				count: 0,
+				isDot: false,
 				customIcon: false,
 			},
 			{
@@ -85,7 +85,6 @@ const store = new Vuex.Store({
 				customIcon: false,
 			},
 		],
-		// current: 0
 	},
 	mutations: {
 		$uStore(state, payload) {
